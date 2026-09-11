@@ -161,6 +161,8 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
                 'supplied': result.supplied.get(info.path, 0),
                 'sole_source': result.sole_source.get(info.path, 0),
                 'unexpected_sectors': len(info.unexpected),
+                'bytes': info.size,
+                'expected_bytes': info.expected_size or None,
             }
             for info in sources
         ],
@@ -181,6 +183,7 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
                 'attempts': res.attempts,
                 'good': res.good,
                 'agreement': res.agreement,
+                'unstable': res.unstable,
                 'sources': [{'path': str(c.source), 'rev': c.rev}
                             for c in res.sources],
             }
@@ -197,6 +200,23 @@ def write(report: dict, path: Path) -> None:
     path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
 
 
+def warnings(sources: Sequence[SourceInfo], fmt_name: str) -> List[str]:
+    """What the user should know about the inputs before trusting the merge."""
+    out = []
+    for info in sources:
+        if n := len(info.unexpected):
+            out.append(f'{info.path.name}: ignored {n} sector'
+                       f'{"s" if n != 1 else ""} the format does not expect')
+        if info.wrong_size:
+            tail = ('the extra sectors were ignored'
+                    if info.size > info.expected_size
+                    else 'the missing tail counts as unread')
+            out.append(f'{info.path.name}: {info.size} bytes where {fmt_name} '
+                       f'is {info.expected_size}, so {tail}. Pass --format if '
+                       f'that is the wrong disk format.')
+    return out
+
+
 def render(result: StackResult, sources: Sequence[SourceInfo],
            fmt_name: str, fmt_detail: str,
            retry_name: str = 'retry.scp',
@@ -208,16 +228,18 @@ def render(result: StackResult, sources: Sequence[SourceInfo],
         rows = _track_rows(result)
         if rows:
             out += ['', 'Tracks needing attention', track_table(result)]
-    unexpected = [(info, n) for info in sources
-                  if (n := len(info.unexpected))]
-    for info, n in unexpected:
-        out.append(f'{info.path.name}: ignored {n} sector'
-                   f'{"s" if n != 1 else ""} the format does not expect')
+    out += warnings(sources, fmt_name)
     commands = reread_commands(result, retry_name)
     if commands:
         out += ['', 'Re-read just these tracks, then run diskstack again '
                     'with the new capture added:']
         out += ['  ' + c for c in commands]
+        shaky = sum(1 for r in result.resolutions
+                    if not r.resolved and r.unstable)
+        if shaky:
+            out.append(f'{shaky} of those sectors read differently on every '
+                       f'pass of the same capture, which is what weak bits '
+                       f'look like. More reads may not settle them.')
     else:
         out += ['', 'Every sector confirmed by CRC. Nothing left to re-read.']
     return '\n'.join(out)

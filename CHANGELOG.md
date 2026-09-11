@@ -16,3 +16,11 @@ First release.
 - Prints a `gw read --tracks=` command naming only the tracks still unresolved.
 - Writes `diskstack-report.json` with per-sector provenance, schema 1.
 - IBM FM/MFM and AmigaDOS MFM formats, auto-detected.
+- Decodes flux one track per core, `-j/--jobs` to change it, falling back to a
+  single process if the worker pool cannot start.
+- Flags a sector as unstable when one capture read it two different ways across
+  its own revolutions, and says so beside the re-read command, because weak
+  bits do not settle down however many more passes you make.
+- Refuses to write the merged image or the report over one of the inputs.
+- Warns when a sector image is not the size the chosen format implies, since
+  the extra sectors get ignored and a missing tail counts as unread.

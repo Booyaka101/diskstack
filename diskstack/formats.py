@@ -3,9 +3,8 @@
 diskstack needs one disk format for the whole run: it is the list of sectors
 the disk is supposed to have, and without it a merge cannot say what is
 missing.  Auto-detection reads the geometry out of whichever input can state
-it most directly -- an IMG boot sector, an IMD track header, or failing that a
-scan of the first
-few cylinders of a flux capture.
+it most directly -- an IMG boot sector, an IMD track header, or failing that
+a scan of the first few cylinders of a flux capture.
 """
 
 from __future__ import annotations
@@ -213,7 +212,7 @@ def detect_format(paths: Sequence[Path],
             tried.append(f'{path.name}: {exc}')
             continue
         if geom is None:
-            tried.append(f'{path.name}: nothing decodable on cylinder 0')
+            tried.append(f'{path.name}: no sectors decoded on its first cylinders')
             continue
         name = match_geometry(geom)
         if name is not None:
@@ -303,10 +302,6 @@ def write_image(path: Path, fmt: gw_codec.DiskDef,
         raise DiskStackError(f'{path}: {exc.strerror or exc}') from exc
 
 
-def is_ibm(fmt: gw_codec.DiskDef) -> bool:
-    return not isinstance(fmt.mk_track(0, 0), amigados.AmigaDOS)
-
-
 __all__ = ['Geometry', 'detect_format', 'fill_track', 'get_format', 'ibm',
-           'is_ibm', 'match_geometry', 'open_image', 'supported_formats',
+           'is_flux', 'match_geometry', 'open_image', 'supported_formats',
            'write_image']

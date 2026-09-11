@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 import sys
+from concurrent.futures.process import BrokenProcessPool
 from contextlib import contextmanager
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
 
 import click
 
-from diskstack import __version__, candidates, formats, report, stack
+from diskstack import (__version__, candidates, formats, parallel, report,
+                       stack)
 from diskstack._vendor.greaseweazle.track import PLL
 from diskstack.errors import DiskStackError
 from diskstack.filler import make_filler
@@ -44,8 +46,26 @@ def reading(path: Path, steps: int, quiet: bool):
         yield lambda: bar.update(1)
 
 
+def read_one(path: Path, fmt, pll: Optional[PLL], revs: Optional[int],
+             detect_filler: bool, jobs: int, on_track
+             ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
+    """One pass over one file, falling back to one process if workers fail."""
+    try:
+        return candidates.load(path, fmt, pll=pll, revs=revs,
+                               detect_filler=detect_filler, jobs=jobs,
+                               on_track=on_track)
+    except (BrokenProcessPool, ImportError, OSError, RuntimeError) as exc:
+        if jobs <= 1:
+            raise
+        click.echo(f'Parallel decode unavailable ({exc}); using one process.',
+                   err=True)
+        return candidates.load(path, fmt, pll=pll, revs=revs,
+                               detect_filler=detect_filler, jobs=1,
+                               on_track=on_track)
+
+
 def load_source(path: Path, fmt, plls: Sequence[Optional[PLL]],
-                revs: Optional[int], detect_filler: bool,
+                revs: Optional[int], detect_filler: bool, jobs: int = 1,
                 on_track=None
                 ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
     """Read one input file, decoding flux once per requested PLL setting.
@@ -53,19 +73,15 @@ def load_source(path: Path, fmt, plls: Sequence[Optional[PLL]],
     Two PLLs disagreeing about a marginal bitcell give two independent
     attempts at the same sector, which is exactly what the vote wants.
     """
-    cands, info = candidates.load(path, fmt, pll=plls[0], revs=revs,
-                                  detect_filler=detect_filler,
-                                  on_track=on_track)
+    cands, info = read_one(path, fmt, plls[0], revs, detect_filler, jobs,
+                           on_track)
     if info.kind != 'scp':
         return cands, info
     for pll in plls[1:]:
-        more, extra = candidates.load(path, fmt, pll=pll, revs=revs,
-                                      detect_filler=detect_filler,
-                                      on_track=on_track)
+        more, extra = read_one(path, fmt, pll, revs, detect_filler, jobs,
+                               on_track)
         cands += more
-        info.candidates += extra.candidates
-        info.good += extra.good
-        info.unexpected += extra.unexpected
+        parallel.merge_info(info, extra)
     return cands, info
 
 
@@ -120,6 +136,10 @@ def _list_formats(ctx, param, value):
 @click.option('--no-vote', is_flag=True,
               help='Skip the byte-wise majority vote; keep only sectors whose '
                    'own CRC passes.')
+@click.option('-j', '--jobs', type=click.IntRange(min=0), metavar='N',
+              default=0, help='Worker processes for decoding flux '
+                              '[default: one per core, up to '
+                              f'{parallel.MAX_JOBS}]')
 @click.option('--retry-name', default='retry.scp', show_default=True,
               metavar='NAME', help='Filename used in the printed gw read '
                                    'command.')
@@ -149,7 +169,7 @@ def main(**opts):
 
 
 def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
-        keep_filler, fill_unresolved, no_vote, retry_name, quiet):
+        keep_filler, fill_unresolved, no_vote, jobs, retry_name, quiet):
     paths = [Path(p) for p in inputs]
     if len(paths) < 2:
         raise DiskStackError(
@@ -164,6 +184,11 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
         seen.add(resolved)
         if not path.exists():
             raise DiskStackError(f'{path}: no such file')
+    if output.resolve() in seen:
+        raise DiskStackError(f'{output}: that is one of the inputs. Writing '
+                             f'the merge over a dump would destroy it.')
+    if report_path is not None and report_path.resolve() in seen:
+        raise DiskStackError(f'{report_path}: that is one of the inputs.')
 
     plls = _parse_plls(pll_specs)
 
@@ -175,12 +200,13 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
 
     all_cands, sources = [], []
     tracks = len(candidates.track_list(fmt))
+    jobs = jobs or parallel.default_jobs()
     for path in paths:
         steps = tracks * len(plls) if formats.is_flux(path) else 1
         with reading(path, steps, quiet) as on_track:
             cands, info = load_source(path, fmt, plls, revs,
                                       detect_filler=not keep_filler,
-                                      on_track=on_track)
+                                      jobs=jobs, on_track=on_track)
             if on_track is not None and not formats.is_flux(path):
                 on_track()
         all_cands += cands
@@ -194,6 +220,10 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
 
     expected = candidates.expected_sectors(fmt)
     sizes = {key: candidates.sector_size(fmt, *key) for key in expected}
+    for info in sources:
+        info.size = info.path.stat().st_size
+        if info.kind != 'scp':
+            info.expected_size = sum(sizes.values())
     result = stack.stack(all_cands, expected, sizes,
                          [info.path for info in sources], vote=not no_vote)
     apply_fill(result, fill_unresolved)

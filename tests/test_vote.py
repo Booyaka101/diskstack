@@ -111,3 +111,26 @@ def test_ties_break_towards_the_better_source():
     assert stack.majority_bytes(values) == b'ab'
     assert stack.largest_cluster(values) == (b'ab', 1)
     assert stack.largest_cluster([b'x', b'y', b'y']) == (b'y', 2)
+
+
+def test_a_sector_that_reads_differently_every_pass_is_flagged_unstable():
+    good = bytes(range(256)) * 2
+    check = crc_bytes(good)
+    group = [candidate(flip_bit(good, 10 * rev, 1), check, 'a.scp', rev=rev)
+             for rev in range(3)]
+
+    res = stack.resolve((3, 0, 5), 512, group, vote=False)
+
+    assert res.status == stack.UNRESOLVED
+    assert res.unstable
+
+
+def test_two_captures_that_each_read_the_same_bytes_are_not_unstable():
+    bad = bytes(512)
+    group = [candidate(bad, crc_bytes(bad + b'x'), src, rev=rev)
+             for src in ('a.scp', 'b.scp') for rev in range(2)]
+
+    res = stack.resolve((3, 0, 5), 512, group, vote=False)
+
+    assert res.status == stack.UNRESOLVED
+    assert not res.unstable

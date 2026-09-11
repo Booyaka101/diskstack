@@ -13,8 +13,8 @@ from test_filler import SECTORS, write_img
 
 FLAGS = ['-o', '--output', '-r', '--report', '--no-report', '-f', '--format',
          '--list-formats', '--pll', '--revs', '--keep-filler',
-         '--fill-unresolved', '--no-vote', '--retry-name', '-q', '--quiet',
-         '-V', '--version', '-h', '--help']
+         '--fill-unresolved', '--no-vote', '-j', '--jobs', '--retry-name',
+         '-q', '--quiet', '-V', '--version', '-h', '--help']
 
 
 def run(*args) -> object:
@@ -155,3 +155,36 @@ def test_bad_pll_spec(tmp_path: Path):
     result = run(a, b, '-o', tmp_path / 'out.img', '--pll', 'wobble')
     assert result.exit_code != 0
     assert 'Bad --pll' in result.output
+
+
+def test_writing_over_an_input_is_refused(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = write_img(tmp_path / 'b.img', set())
+    result = run(a, b, '-o', a)
+    assert result.exit_code != 0
+    assert 'one of the inputs' in result.output
+    assert a.read_bytes() == b.read_bytes(), 'the input is untouched'
+
+
+def test_the_report_may_not_overwrite_an_input(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = write_img(tmp_path / 'b.img', set())
+    result = run(a, b, '-o', tmp_path / 'out.img', '-r', b)
+    assert result.exit_code != 0
+    assert 'one of the inputs' in result.output
+
+
+def test_an_input_of_the_wrong_size_is_called_out(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = write_img(tmp_path / 'b.img', set(), sectors=SECTORS * 2)
+    result = run(a, b, '-o', tmp_path / 'out.img', '--no-report')
+    assert 'b.img: 737280 bytes where ibm.360 is 368640' in result.output
+    assert 'extra sectors were ignored' in result.output
+
+
+def test_jobs_is_accepted(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', {3})
+    b = write_img(tmp_path / 'b.img', {500})
+    result = run(a, b, '-o', tmp_path / 'merged.img', '--no-report',
+                 '--jobs', '2')
+    assert result.exit_code == 0, result.output

@@ -93,6 +93,17 @@ Per sector, in order:
 A sector that is good in any input is never worse in the output. There is a
 test for that.
 
+The check value has to come off the disk, which means a stack of only sector
+images can never reach step 2. `.img` and `.adf` files carry data and nothing
+to verify it with, so identical bytes in two images prove only that both dumps
+read the same thing. Mixing in one flux capture is what gives the vote
+something to check against.
+
+A sector the merge could not confirm is marked `unstable` if one capture read
+it two different ways across its own revolutions. That is what weak bits look
+like, and they are usually deliberate, so more passes over the disk will not
+settle them. The stdout note says so next to the re-read command.
+
 Sectors Greaseweazle filled with `-=[BAD SECTOR]=-` are treated as failed
 reads, not as data, so a `.img` from an earlier bad session still contributes
 its good sectors. `--keep-filler` turns that off.
@@ -124,6 +135,8 @@ its good sectors. `--keep-filler` turns that off.
                                   filler, or zeroes.  [default: best]
   --no-vote                       Skip the byte-wise majority vote; keep only
                                   sectors whose own CRC passes.
+  -j, --jobs N                    Worker processes for decoding flux [default:
+                                  one per core, up to 8]  [x>=0]
   --retry-name NAME               Filename used in the printed gw read
                                   command.  [default: retry.scp]
   -q, --quiet                     Print the summary and the re-read command,
@@ -131,6 +144,11 @@ its good sectors. `--keep-filler` turns that off.
   -V, --version                   Show the version and exit.
   -h, --help                      Show this message and exit.
 ```
+
+Decoding flux is the slow part, so it runs one track per core by default. A
+three-capture 40-cylinder merge takes about six seconds on eight cores against
+half a minute on one. `--jobs 1` forces the single-process path, which is also
+what happens automatically if the worker pool cannot start.
 
 `--pll` is worth knowing about. Repeating it decodes each flux capture several
 ways, and since two PLL settings disagree about different marginal bitcells,
@@ -151,6 +169,7 @@ contributing read came from. Plus per-input totals and the re-read trackspecs.
 {
   "cyl": 17, "head": 0, "sec_id": 4, "size": 512,
   "status": "unresolved", "attempts": 6, "good": 0, "agreement": 3,
+  "unstable": false,
   "sources": [{"path": "capture_a.scp", "rev": 0}]
 }
 ```

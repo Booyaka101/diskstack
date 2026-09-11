@@ -110,3 +110,32 @@ def test_quiet_drops_the_tables_but_keeps_the_point():
                          'test', tables=False)
     assert 'Tracks needing attention' not in text
     assert 'gw read retry.scp --tracks=c=1:h=0' in text
+
+
+def test_weak_bits_are_called_out_next_to_the_re_read_command():
+    result = make_result({(0, 0): [1]})
+    for res in result.resolutions:
+        res.unstable = not res.resolved
+
+    text = report.render(result, [], 'ibm.360', 'given with --format')
+
+    assert 'gw read retry.scp' in text
+    assert '1 of those sectors read differently on every pass' in text
+
+
+def test_a_steady_bad_sector_gets_no_weak_bit_note():
+    text = report.render(make_result({(0, 0): [1]}), [], 'ibm.360', 'detail')
+    assert 'weak bits' not in text
+
+
+def test_only_a_sector_image_reports_an_expected_size():
+    flux = sources()[0]
+    flux.size = 19327821
+    img = SourceInfo(path=Path('b.img'), kind='img', size=368640,
+                     expected_size=368640)
+
+    built = report.build(make_result({}), [flux, img], 'ibm.360', 'test',
+                         Path('out.img'))
+
+    assert [i['bytes'] for i in built['inputs']] == [19327821, 368640]
+    assert [i['expected_bytes'] for i in built['inputs']] == [None, 368640]

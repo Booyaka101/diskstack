@@ -14,7 +14,7 @@ FIXTURES = Path(__file__).resolve().parent / 'fixtures'
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(FIXTURES))
 
-from diskstack import candidates, formats, stack  # noqa: E402
+from diskstack import candidates, formats, parallel, stack  # noqa: E402
 
 
 @dataclass
@@ -62,7 +62,7 @@ def decoded(fixture_dir: Path) -> Decoded:
     cands: List[candidates.Candidate] = []
     infos = []
     for path in paths:
-        got, info = candidates.load(path, fmt)
+        got, info = candidates.load(path, fmt, jobs=parallel.default_jobs())
         cands += got
         infos.append(info)
     return Decoded(paths=paths, fmt_name=fmt_name, fmt=fmt, detail=detail,

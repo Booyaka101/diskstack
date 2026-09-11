@@ -87,6 +87,17 @@ class SourceInfo:
     candidates: int = 0
     good: int = 0
     unexpected: List[Tuple[int, int, int]] = field(default_factory=list)
+    size: int = 0
+    expected_size: int = 0
+
+    @property
+    def wrong_size(self) -> bool:
+        """True if a sector image is not the size this disk format implies.
+
+        The reader simply walks the format's track list, so a dump of a
+        different disk is silently truncated or padded rather than rejected.
+        """
+        return bool(self.expected_size) and self.size != self.expected_size
 
 
 def _revolution_index(bounds: Sequence[int], offset: int) -> int:
@@ -193,6 +204,32 @@ def _expected_ibm(track: ibm.IBMTrack) -> Dict[int, Tuple[int, int, int]]:
     return {s.idam.r: (s.idam.c, s.idam.h, s.idam.n) for s in track.sectors}
 
 
+def track_candidates(image, fmt: gw_codec.DiskDef, cyl: int, head: int,
+                     source: Path, info: SourceInfo,
+                     pll: Optional[PLL] = None,
+                     revs: Optional[int] = None) -> List[Candidate]:
+    """Every read attempt on one track of a flux capture.
+
+    This is where a run spends nearly all of its time: the PLL walks the flux
+    of every revolution.  :mod:`diskstack.parallel` calls it one track per
+    worker process.
+    """
+    flux = image.get_track(cyl, head)
+    if flux is None:
+        return []
+    proto = fmt.mk_track(cyl, head)
+    if proto is None:
+        return []
+    raw = _pll_track(flux, proto.clock, proto.time_per_rev, pll, revs)
+    info.revolutions = max(info.revolutions, len(raw.revolutions))
+    if isinstance(proto, amigados.AmigaDOS):
+        return list(_amiga_flux_candidates(raw, proto, cyl, head,
+                                           source, info))
+    inner = proto.raw if isinstance(proto, ibm.IBMTrack_Fixed) else proto
+    return list(_ibm_flux_candidates(raw, inner, cyl, head, source,
+                                     _expected_ibm(proto), info))
+
+
 def flux_candidates(image, fmt: gw_codec.DiskDef, source: Path,
                     info: SourceInfo, pll: Optional[PLL] = None,
                     revs: Optional[int] = None,
@@ -202,21 +239,8 @@ def flux_candidates(image, fmt: gw_codec.DiskDef, source: Path,
     for cyl, head in track_list(fmt):
         if on_track is not None:
             on_track()
-        flux = image.get_track(cyl, head)
-        if flux is None:
-            continue
-        proto = fmt.mk_track(cyl, head)
-        if proto is None:
-            continue
-        raw = _pll_track(flux, proto.clock, proto.time_per_rev, pll, revs)
-        info.revolutions = max(info.revolutions, len(raw.revolutions))
-        if isinstance(proto, amigados.AmigaDOS):
-            yield from _amiga_flux_candidates(raw, proto, cyl, head,
-                                              source, info)
-        else:
-            inner = proto.raw if isinstance(proto, ibm.IBMTrack_Fixed) else proto
-            yield from _ibm_flux_candidates(raw, inner, cyl, head, source,
-                                            _expected_ibm(proto), info)
+        yield from track_candidates(image, fmt, cyl, head, source, info,
+                                    pll, revs)
 
 
 def _image_track_candidates(track, cyl: int, head: int, source: Path,
@@ -300,21 +324,26 @@ def sector_size(fmt: gw_codec.DiskDef, cyl: int, head: int,
 
 def load(path: Path, fmt: gw_codec.DiskDef, *, pll: Optional[PLL] = None,
          revs: Optional[int] = None, detect_filler: bool = True,
+         jobs: int = 1,
          on_track: Optional[Callable[[], None]] = None
          ) -> Tuple[List[Candidate], SourceInfo]:
     """Read one input file and return all of its sector read attempts."""
-    from diskstack import formats  # circular at module scope
+    from diskstack import formats, parallel  # circular at module scope
 
     image, kind = formats.open_image(path, fmt)
     info = SourceInfo(path=path, kind=kind)
     try:
-        if kind == 'scp':
+        if kind != 'scp':
+            cands = list(image_candidates(image, fmt, path, info,
+                                          detect_filler=detect_filler))
+        elif jobs > 1:
+            cands = parallel.flux_candidates(path, fmt, info, pll=pll,
+                                             revs=revs, jobs=jobs,
+                                             on_track=on_track)
+        else:
             cands = list(flux_candidates(image, fmt, path, info,
                                          pll=pll, revs=revs,
                                          on_track=on_track))
-        else:
-            cands = list(image_candidates(image, fmt, path, info,
-                                          detect_filler=detect_filler))
     except gw_error.Fatal as exc:
         raise DiskStackError(f'{path}: {exc}') from exc
     return cands, info

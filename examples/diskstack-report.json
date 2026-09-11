@@ -2,7 +2,7 @@
   "schema": 1,
   "tool": "diskstack",
   "version": "1.0.0",
-  "generated": "2026-09-11T13:19:49+00:00",
+  "generated": "2026-09-11T14:07:50+00:00",
   "format": "ibm.360",
   "format_detail": "capture_a.scp (IBM 40 cyls, 2 heads, 9 sectors of 512 bytes)",
   "output": "merged.img",
@@ -15,7 +15,9 @@
       "good": 2013,
       "supplied": 694,
       "sole_source": 20,
-      "unexpected_sectors": 0
+      "unexpected_sectors": 0,
+      "bytes": 19327821,
+      "expected_bytes": null
     },
     {
       "path": "tests\\fixtures\\capture_b.scp",
@@ -25,7 +27,9 @@
       "good": 2017,
       "supplied": 694,
       "sole_source": 20,
-      "unexpected_sectors": 0
+      "unexpected_sectors": 0,
+      "bytes": 19328277,
+      "expected_bytes": null
     }
   ],
   "totals": {
@@ -45,6 +49,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -69,6 +74,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -101,6 +107,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -125,6 +132,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -161,6 +169,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -197,6 +206,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -233,6 +243,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -269,6 +280,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -305,6 +317,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -341,6 +354,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -377,6 +391,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -409,6 +424,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -441,6 +457,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -465,6 +482,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -501,6 +519,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -525,6 +544,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -561,6 +581,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -597,6 +618,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -633,6 +655,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -665,6 +688,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -701,6 +725,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -737,6 +762,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -773,6 +799,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -809,6 +836,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -845,6 +873,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -881,6 +910,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -917,6 +947,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -953,6 +984,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -989,6 +1021,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1025,6 +1058,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1061,6 +1095,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1097,6 +1132,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1133,6 +1169,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1169,6 +1206,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1197,6 +1235,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1233,6 +1272,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1269,6 +1309,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1305,6 +1346,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1341,6 +1383,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1377,6 +1420,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1413,6 +1457,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1441,6 +1486,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1477,6 +1523,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1513,6 +1560,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1549,6 +1597,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1585,6 +1634,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1621,6 +1671,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1657,6 +1708,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1693,6 +1745,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1729,6 +1782,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1761,6 +1815,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1797,6 +1852,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1833,6 +1889,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1869,6 +1926,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1905,6 +1963,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1941,6 +2000,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -1977,6 +2037,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2013,6 +2074,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2049,6 +2111,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2085,6 +2148,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2121,6 +2185,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2153,6 +2218,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2189,6 +2255,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2225,6 +2292,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2257,6 +2325,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2293,6 +2362,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2329,6 +2399,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2365,6 +2436,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2397,6 +2469,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2433,6 +2506,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2469,6 +2543,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2505,6 +2580,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2541,6 +2617,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2577,6 +2654,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -2601,6 +2679,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2637,6 +2716,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2661,6 +2741,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2697,6 +2778,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2733,6 +2815,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2769,6 +2852,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2805,6 +2889,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2841,6 +2926,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2877,6 +2963,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2909,6 +2996,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2945,6 +3033,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -2977,6 +3066,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -3001,6 +3091,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3037,6 +3128,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3061,6 +3153,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3097,6 +3190,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3133,6 +3227,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3165,6 +3260,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3201,6 +3297,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3237,6 +3334,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3273,6 +3371,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3309,6 +3408,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3345,6 +3445,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3377,6 +3478,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3413,6 +3515,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3449,6 +3552,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3477,6 +3581,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3513,6 +3618,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3549,6 +3655,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3585,6 +3692,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3621,6 +3729,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3657,6 +3766,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3693,6 +3803,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3729,6 +3840,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3765,6 +3877,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3801,6 +3914,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3837,6 +3951,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3873,6 +3988,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3909,6 +4025,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3945,6 +4062,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -3981,6 +4099,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4017,6 +4136,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4049,6 +4169,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4085,6 +4206,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4121,6 +4243,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4157,6 +4280,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4193,6 +4317,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4229,6 +4354,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4261,6 +4387,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4297,6 +4424,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4333,6 +4461,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4365,6 +4494,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4401,6 +4531,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4437,6 +4568,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4473,6 +4605,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4509,6 +4642,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4545,6 +4679,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4581,6 +4716,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4617,6 +4753,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4649,6 +4786,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4681,6 +4819,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4717,6 +4856,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4753,6 +4893,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4789,6 +4930,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4825,6 +4967,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4861,6 +5004,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4897,6 +5041,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4933,6 +5078,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -4969,6 +5115,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5005,6 +5152,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5037,6 +5185,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5073,6 +5222,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5109,6 +5259,7 @@
       "attempts": 2,
       "good": 2,
       "agreement": 2,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -5129,6 +5280,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5165,6 +5317,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5189,6 +5342,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5225,6 +5379,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5261,6 +5416,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5297,6 +5453,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5333,6 +5490,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5369,6 +5527,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5405,6 +5564,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5437,6 +5597,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5473,6 +5634,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5509,6 +5671,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -5533,6 +5696,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5569,6 +5733,7 @@
       "attempts": 5,
       "good": 2,
       "agreement": 2,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5589,6 +5754,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5625,6 +5791,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5661,6 +5828,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5697,6 +5865,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5733,6 +5902,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5769,6 +5939,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5805,6 +5976,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5841,6 +6013,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5877,6 +6050,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5909,6 +6083,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5945,6 +6120,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -5977,6 +6153,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6013,6 +6190,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6045,6 +6223,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6081,6 +6260,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6117,6 +6297,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6153,6 +6334,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6189,6 +6371,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6225,6 +6408,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6261,6 +6445,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6297,6 +6482,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6333,6 +6519,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6369,6 +6556,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6405,6 +6593,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6437,6 +6626,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6473,6 +6663,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6509,6 +6700,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6541,6 +6733,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6577,6 +6770,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6613,6 +6807,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6645,6 +6840,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6677,6 +6873,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6713,6 +6910,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6749,6 +6947,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6785,6 +6984,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6821,6 +7021,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6857,6 +7058,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6893,6 +7095,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6925,6 +7128,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6961,6 +7165,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -6997,6 +7202,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7033,6 +7239,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7069,6 +7276,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7105,6 +7313,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7141,6 +7350,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7177,6 +7387,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7209,6 +7420,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7245,6 +7457,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7281,6 +7494,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7317,6 +7531,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7353,6 +7568,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7389,6 +7605,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7417,6 +7634,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7453,6 +7671,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7489,6 +7708,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7525,6 +7745,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7561,6 +7782,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7593,6 +7815,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7625,6 +7848,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -7649,6 +7873,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7685,6 +7910,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7709,6 +7935,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7745,6 +7972,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7781,6 +8009,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7817,6 +8046,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7853,6 +8083,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7889,6 +8120,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7925,6 +8157,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7961,6 +8194,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -7993,6 +8227,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8029,6 +8264,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -8053,6 +8289,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8085,6 +8322,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8109,6 +8347,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8145,6 +8384,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8181,6 +8421,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8217,6 +8458,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8253,6 +8495,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8285,6 +8528,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8317,6 +8561,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8353,6 +8598,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8389,6 +8635,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8425,6 +8672,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8457,6 +8705,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8493,6 +8742,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8529,6 +8779,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8561,6 +8812,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8597,6 +8849,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8633,6 +8886,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8669,6 +8923,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8705,6 +8960,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8741,6 +8997,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8777,6 +9034,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8809,6 +9067,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8845,6 +9104,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8881,6 +9141,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8913,6 +9174,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8949,6 +9211,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -8985,6 +9248,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9021,6 +9285,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9057,6 +9322,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9093,6 +9359,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9125,6 +9392,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9161,6 +9429,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9197,6 +9466,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9233,6 +9503,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9269,6 +9540,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9301,6 +9573,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9337,6 +9610,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9373,6 +9647,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9409,6 +9684,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9441,6 +9717,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9477,6 +9754,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9513,6 +9791,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9545,6 +9824,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9581,6 +9861,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9617,6 +9898,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9653,6 +9935,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9689,6 +9972,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9725,6 +10009,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9761,6 +10046,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9797,6 +10083,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9833,6 +10120,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9869,6 +10157,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9905,6 +10194,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9941,6 +10231,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -9973,6 +10264,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10005,6 +10297,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10041,6 +10334,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10077,6 +10371,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10109,6 +10404,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10145,6 +10441,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -10169,6 +10466,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10205,6 +10503,7 @@
       "attempts": 2,
       "good": 2,
       "agreement": 2,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10225,6 +10524,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10261,6 +10561,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10297,6 +10598,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10321,6 +10623,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10353,6 +10656,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10389,6 +10693,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10425,6 +10730,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10461,6 +10767,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10497,6 +10804,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10533,6 +10841,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -10557,6 +10866,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10593,6 +10903,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10629,6 +10940,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10665,6 +10977,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10701,6 +11014,7 @@
       "attempts": 6,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10725,6 +11039,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10761,6 +11076,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10793,6 +11109,7 @@
       "attempts": 6,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10817,6 +11134,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10849,6 +11167,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10885,6 +11204,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10921,6 +11241,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10957,6 +11278,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -10989,6 +11311,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11021,6 +11344,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11057,6 +11381,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11093,6 +11418,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11129,6 +11455,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11165,6 +11492,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11201,6 +11529,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11237,6 +11566,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11273,6 +11603,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11309,6 +11640,7 @@
       "attempts": 5,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11333,6 +11665,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11369,6 +11702,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11405,6 +11739,7 @@
       "attempts": 6,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11429,6 +11764,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11465,6 +11801,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11501,6 +11838,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11537,6 +11875,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11573,6 +11912,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11609,6 +11949,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11645,6 +11986,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11681,6 +12023,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11717,6 +12060,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11749,6 +12093,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11785,6 +12130,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11821,6 +12167,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11853,6 +12200,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11889,6 +12237,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11925,6 +12274,7 @@
       "attempts": 6,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11949,6 +12299,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -11985,6 +12336,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12021,6 +12373,7 @@
       "attempts": 6,
       "good": 0,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12045,6 +12398,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12077,6 +12431,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12113,6 +12468,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12149,6 +12505,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12181,6 +12538,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12217,6 +12575,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12253,6 +12612,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12289,6 +12649,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12325,6 +12686,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12361,6 +12723,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12397,6 +12760,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12433,6 +12797,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12469,6 +12834,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12501,6 +12867,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12537,6 +12904,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12569,6 +12937,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12605,6 +12974,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -12629,6 +12999,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12665,6 +13036,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12689,6 +13061,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12725,6 +13098,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12761,6 +13135,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12785,6 +13160,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12821,6 +13197,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12857,6 +13234,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12893,6 +13271,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12925,6 +13304,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12957,6 +13337,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -12993,6 +13374,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -13017,6 +13399,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13053,6 +13436,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13089,6 +13473,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13125,6 +13510,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13161,6 +13547,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13197,6 +13584,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13233,6 +13621,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13269,6 +13658,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13301,6 +13691,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13337,6 +13728,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13369,6 +13761,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13405,6 +13798,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13441,6 +13835,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13473,6 +13868,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13509,6 +13905,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13545,6 +13942,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13581,6 +13979,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13617,6 +14016,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13653,6 +14053,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13689,6 +14090,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13725,6 +14127,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13757,6 +14160,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13789,6 +14193,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13825,6 +14230,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13861,6 +14267,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13897,6 +14304,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13933,6 +14341,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -13969,6 +14378,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14005,6 +14415,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14041,6 +14452,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14077,6 +14489,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14113,6 +14526,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14149,6 +14563,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14185,6 +14600,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14221,6 +14637,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14253,6 +14670,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14285,6 +14703,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14321,6 +14740,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14357,6 +14777,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14389,6 +14810,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14425,6 +14847,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14461,6 +14884,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14497,6 +14921,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14533,6 +14958,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14569,6 +14995,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14605,6 +15032,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14641,6 +15069,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14677,6 +15106,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14713,6 +15143,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14749,6 +15180,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14785,6 +15217,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14817,6 +15250,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14849,6 +15283,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14885,6 +15320,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14921,6 +15357,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14957,6 +15394,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -14989,6 +15427,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15025,6 +15464,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15061,6 +15501,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15093,6 +15534,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15129,6 +15571,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -15153,6 +15596,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15189,6 +15633,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15213,6 +15658,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -15237,6 +15683,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15273,6 +15720,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15297,6 +15745,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15333,6 +15782,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15369,6 +15819,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15401,6 +15852,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15437,6 +15889,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15469,6 +15922,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15505,6 +15959,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15541,6 +15996,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15577,6 +16033,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15613,6 +16070,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15649,6 +16107,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15681,6 +16140,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15717,6 +16177,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15753,6 +16214,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15789,6 +16251,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15821,6 +16284,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15857,6 +16321,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15893,6 +16358,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15929,6 +16395,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -15965,6 +16432,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16001,6 +16469,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16037,6 +16506,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16073,6 +16543,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16109,6 +16580,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16145,6 +16617,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16181,6 +16654,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16217,6 +16691,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16253,6 +16728,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16289,6 +16765,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16325,6 +16802,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16361,6 +16839,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16393,6 +16872,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16425,6 +16905,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16461,6 +16942,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16497,6 +16979,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16533,6 +17016,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16569,6 +17053,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16605,6 +17090,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16641,6 +17127,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16677,6 +17164,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16705,6 +17193,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16741,6 +17230,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16777,6 +17267,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16813,6 +17304,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16849,6 +17341,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16885,6 +17378,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16921,6 +17415,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16957,6 +17452,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -16993,6 +17489,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17029,6 +17526,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17065,6 +17563,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17093,6 +17592,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17125,6 +17625,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17161,6 +17662,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17197,6 +17699,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17233,6 +17736,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17265,6 +17769,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17301,6 +17806,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17337,6 +17843,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17373,6 +17880,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17409,6 +17917,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17433,6 +17942,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17469,6 +17979,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17505,6 +18016,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17541,6 +18053,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17577,6 +18090,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17613,6 +18127,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17645,6 +18160,7 @@
       "attempts": 5,
       "good": 2,
       "agreement": 2,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -17665,6 +18181,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17701,6 +18218,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17737,6 +18255,7 @@
       "attempts": 5,
       "good": 2,
       "agreement": 2,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -17757,6 +18276,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17793,6 +18313,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17817,42 +18338,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
-      "sources": [
-        {
-          "path": "tests\\fixtures\\capture_a.scp",
-          "rev": 0
-        },
-        {
-          "path": "tests\\fixtures\\capture_a.scp",
-          "rev": 1
-        },
-        {
-          "path": "tests\\fixtures\\capture_a.scp",
-          "rev": 2
-        },
-        {
-          "path": "tests\\fixtures\\capture_b.scp",
-          "rev": 0
-        },
-        {
-          "path": "tests\\fixtures\\capture_b.scp",
-          "rev": 1
-        },
-        {
-          "path": "tests\\fixtures\\capture_b.scp",
-          "rev": 2
-        }
-      ]
-    },
-    {
-      "cyl": 28,
-      "head": 1,
-      "sec_id": 6,
-      "size": 512,
-      "status": "clean",
-      "attempts": 6,
-      "good": 6,
-      "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17883,12 +18369,50 @@
     {
       "cyl": 28,
       "head": 1,
+      "sec_id": 6,
+      "size": 512,
+      "status": "clean",
+      "attempts": 6,
+      "good": 6,
+      "agreement": 6,
+      "unstable": false,
+      "sources": [
+        {
+          "path": "tests\\fixtures\\capture_a.scp",
+          "rev": 0
+        },
+        {
+          "path": "tests\\fixtures\\capture_a.scp",
+          "rev": 1
+        },
+        {
+          "path": "tests\\fixtures\\capture_a.scp",
+          "rev": 2
+        },
+        {
+          "path": "tests\\fixtures\\capture_b.scp",
+          "rev": 0
+        },
+        {
+          "path": "tests\\fixtures\\capture_b.scp",
+          "rev": 1
+        },
+        {
+          "path": "tests\\fixtures\\capture_b.scp",
+          "rev": 2
+        }
+      ]
+    },
+    {
+      "cyl": 28,
+      "head": 1,
       "sec_id": 7,
       "size": 512,
       "status": "clean",
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17921,6 +18445,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17957,6 +18482,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -17993,6 +18519,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18029,6 +18556,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18065,6 +18593,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18097,6 +18626,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18133,6 +18663,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18169,6 +18700,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18205,6 +18737,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18237,6 +18770,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18273,6 +18807,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18309,6 +18844,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18345,6 +18881,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18381,6 +18918,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18417,6 +18955,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18449,6 +18988,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18481,6 +19021,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18517,6 +19058,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18553,6 +19095,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18589,6 +19132,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18625,6 +19169,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18661,6 +19206,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18697,6 +19243,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18729,6 +19276,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18765,6 +19313,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18801,6 +19350,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18833,6 +19383,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18869,6 +19420,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18905,6 +19457,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18941,6 +19494,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -18977,6 +19531,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19009,6 +19564,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19045,6 +19601,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19081,6 +19638,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19117,6 +19675,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19153,6 +19712,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19189,6 +19749,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19225,6 +19786,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19257,6 +19819,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19293,6 +19856,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19329,6 +19893,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19365,6 +19930,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19401,6 +19967,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19437,6 +20004,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19473,6 +20041,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19509,6 +20078,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19541,6 +20111,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19577,6 +20148,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19613,6 +20185,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19649,6 +20222,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19685,6 +20259,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19721,6 +20296,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19757,6 +20333,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19793,6 +20370,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19829,6 +20407,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19857,6 +20436,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19893,6 +20473,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19929,6 +20510,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19953,6 +20535,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -19989,6 +20572,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20025,6 +20609,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20061,6 +20646,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20097,6 +20683,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20133,6 +20720,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20169,6 +20757,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -20193,6 +20782,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20229,6 +20819,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20265,6 +20856,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -20289,6 +20881,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20325,6 +20918,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20349,6 +20943,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20385,6 +20980,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20417,6 +21013,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20449,6 +21046,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20485,6 +21083,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20521,6 +21120,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20557,6 +21157,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20593,6 +21194,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20625,6 +21227,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20661,6 +21264,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20693,6 +21297,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20729,6 +21334,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20765,6 +21371,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20801,6 +21408,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20829,6 +21437,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20865,6 +21474,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20901,6 +21511,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20937,6 +21548,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -20973,6 +21585,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21009,6 +21622,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21045,6 +21659,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21081,6 +21696,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21117,6 +21733,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21153,6 +21770,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21189,6 +21807,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21225,6 +21844,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21261,6 +21881,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21297,6 +21918,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21333,6 +21955,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21369,6 +21992,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21401,6 +22025,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21437,6 +22062,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21473,6 +22099,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21505,6 +22132,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21541,6 +22169,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21577,6 +22206,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21609,6 +22239,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21645,6 +22276,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21681,6 +22313,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21717,6 +22350,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21753,6 +22387,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21789,6 +22424,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21825,6 +22461,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21861,6 +22498,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21897,6 +22535,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21933,6 +22572,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -21969,6 +22609,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22005,6 +22646,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22037,6 +22679,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22073,6 +22716,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22109,6 +22753,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22145,6 +22790,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22181,6 +22827,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22217,6 +22864,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22253,6 +22901,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22289,6 +22938,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22325,6 +22975,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22361,6 +23012,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22389,6 +23041,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -22413,6 +23066,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22449,6 +23103,7 @@
       "attempts": 3,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22473,6 +23128,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22509,6 +23165,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22541,6 +23198,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22577,6 +23235,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22613,6 +23272,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22649,6 +23309,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22685,6 +23346,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22717,6 +23379,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22749,6 +23412,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22785,6 +23449,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_b.scp",
@@ -22809,6 +23474,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22845,6 +23511,7 @@
       "attempts": 6,
       "good": 3,
       "agreement": 3,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22869,6 +23536,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22905,6 +23573,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22941,6 +23610,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -22977,6 +23647,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23013,6 +23684,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23049,6 +23721,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23085,6 +23758,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23121,6 +23795,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23157,6 +23832,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23185,6 +23861,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23221,6 +23898,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23257,6 +23935,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23293,6 +23972,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23329,6 +24009,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23365,6 +24046,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23397,6 +24079,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23433,6 +24116,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23469,6 +24153,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23505,6 +24190,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23541,6 +24227,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23577,6 +24264,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23609,6 +24297,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23641,6 +24330,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23677,6 +24367,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23713,6 +24404,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23745,6 +24437,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23781,6 +24474,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23817,6 +24511,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23853,6 +24548,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23889,6 +24585,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23925,6 +24622,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23961,6 +24659,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -23997,6 +24696,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24033,6 +24733,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24069,6 +24770,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24105,6 +24807,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24137,6 +24840,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24173,6 +24877,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24209,6 +24914,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24245,6 +24951,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24281,6 +24988,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24317,6 +25025,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24353,6 +25062,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24389,6 +25099,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24425,6 +25136,7 @@
       "attempts": 4,
       "good": 4,
       "agreement": 4,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24453,6 +25165,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24489,6 +25202,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24525,6 +25239,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24561,6 +25276,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24597,6 +25313,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24633,6 +25350,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24669,6 +25387,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24705,6 +25424,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24741,6 +25461,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24777,6 +25498,7 @@
       "attempts": 6,
       "good": 6,
       "agreement": 6,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24813,6 +25535,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",
@@ -24845,6 +25568,7 @@
       "attempts": 5,
       "good": 5,
       "agreement": 5,
+      "unstable": false,
       "sources": [
         {
           "path": "tests\\fixtures\\capture_a.scp",

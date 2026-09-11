@@ -57,6 +57,7 @@ class Resolution:
     agreement: int = 0
     sources: List[Contribution] = field(default_factory=list)
     discarded: int = 0
+    unstable: bool = False
 
     @property
     def key(self) -> Tuple[int, int, int]:
@@ -176,6 +177,19 @@ def _check_trials(group: Sequence[Candidate]) -> List[Tuple[int, bytes]]:
     return trials
 
 
+def unstable(group: Sequence[Candidate]) -> bool:
+    """True if some input read this sector two different ways on its own.
+
+    Two revolutions of one capture disagreeing is the signature of weak bits,
+    which are deliberate on protected disks and do not settle down however
+    many more times the disk is read.
+    """
+    per_source: Dict[Path, set] = defaultdict(set)
+    for cand in group:
+        per_source[cand.source].add(cand.data)
+    return any(len(seen) > 1 for seen in per_source.values())
+
+
 def resolve(key: Tuple[int, int, int], size: int,
             group: Sequence[Candidate], vote: bool = True) -> Resolution:
     """Apply the three tiers to one sector's read attempts."""
@@ -187,6 +201,7 @@ def resolve(key: Tuple[int, int, int], size: int,
     if not usable:
         return res
     res.good = sum(1 for c in usable if c.data_crc_ok)
+    res.unstable = unstable(usable)
 
     clean = [c for c in usable if c.data_crc_ok]
     if clean:
