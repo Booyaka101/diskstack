@@ -1,0 +1,46 @@
+$ diskstack tests/fixtures/capture_a.scp tests/fixtures/capture_b.scp -o merged.img
+Reading capture_a.scp
+Reading capture_b.scp
+Format: ibm.360 (capture_a.scp (IBM 40 cyls, 2 heads, 9 sectors of 512 bytes))
+
+720 sectors: 714 clean (from 2 files), 6 unresolved
+
+Sources
+  file           type  revs  attempts  good  supplied  sole
+  capture_a.scp  scp      3      2058  2013       694    20
+  capture_b.scp  scp      3      2061  2017       694    20
+
+Tracks needing attention
+  cyl  head  clean  voted  unresolved  missing  sector ids still bad
+   17     0      7      0           2        0  4,7
+   18     0      7      0           2        0  4,7
+   19     0      7      0           2        0  4,7
+
+Re-read just these tracks, then run diskstack again with the new capture added:
+  gw read retry.scp --tracks=c=17-19:h=0
+
+Wrote merged.img (368640 bytes) and diskstack-report.json
+$ echo $?
+2
+
+$ gw read capture_c.scp --tracks=c=17-19:h=0        # on the real drive
+
+$ diskstack tests/fixtures/capture_a.scp tests/fixtures/capture_b.scp tests/fixtures/capture_c.scp -o merged.img
+Reading capture_a.scp
+Reading capture_b.scp
+Reading capture_c.scp
+Format: ibm.360 (capture_a.scp (IBM 40 cyls, 2 heads, 9 sectors of 512 bytes))
+
+720 sectors: 714 clean (from 3 files), 6 recovered by vote
+
+Sources
+  file           type  revs  attempts  good  supplied  sole
+  capture_a.scp  scp      3      2058  2013       700     0
+  capture_b.scp  scp      3      2061  2017       700     0
+  capture_c.scp  scp      3      2060  2017       700     0
+
+Every sector confirmed by CRC. Nothing left to re-read.
+
+Wrote merged.img (368640 bytes) and diskstack-report.json
+$ echo $?
+0

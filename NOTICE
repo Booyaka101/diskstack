@@ -1,0 +1,51 @@
+diskstack bundles part of Greaseweazle.
+
+    https://github.com/keirf/greaseweazle
+    commit 26690f89967d519e0106ab9566019a026b920bb4 (master, post-v1.23)
+
+Greaseweazle is released into the public domain under the Unlicense. The full
+text is in diskstack/_vendor/greaseweazle/COPYING.
+
+Greaseweazle is not published on PyPI, so its flux and sector decoders are
+vendored rather than depended on. tools/vendor.py regenerates the whole tree
+from that commit; nothing under diskstack/_vendor/ is edited by hand.
+
+What is vendored: src/greaseweazle/ minus usb.py, cli.py and tools/. TrackSet,
+range_str and columnify are extracted from tools/util.py into a standalone
+module because the rest of that file drives the USB hardware and needs
+pyserial.
+
+Local changes, all applied automatically by tools/vendor.py:
+
+  * imports rewritten from `greaseweazle.*` to
+    `diskstack._vendor.greaseweazle.*`
+
+  * greaseweazle/__init__.py is generated. It carries the vendored commit as
+    __version__ and imports codec.codec, because codec/codec.py imports every
+    codec at module scope and those codecs import back into codec.ibm.ibm, so
+    importing e.g. image.imd first lands on a partially-initialised module.
+    Upstream never hits this because its CLI always reaches codec.codec first.
+
+  * codec/ibm/ibm.py: the two `print("Unknown mark %02x")` warnings are
+    dropped. Damaged tracks produce them constantly and they would corrupt the
+    table diskstack prints on stdout.
+
+  * optimised/__init__.py: the two warnings about the missing C extension are
+    dropped, for the same reason. The pure-Python fallback is used and is fast
+    enough (about 75 ms per three-revolution track).
+
+  * image/imd.py: the reader now records the per-sector data-error flag
+    (rec & 4) and the data-unavailable code (rec == 0) as a failed CRC instead
+    of discarding both. An IMD full of error sectors is exactly the input
+    diskstack exists to merge.
+
+  * codec/codec.py: importlib.resources.open_text is replaced with
+    importlib.resources.files(...).joinpath(...).open(), which is the form
+    that still works once the package is installed as a wheel.
+
+The test fixtures download Transylvania.img from the fluxfox test corpus:
+
+    https://github.com/dbalsom/fluxfox/tree/main/tests/images/transylvania
+
+See the LICENSE.txt in that directory for its terms. Nothing from it is
+redistributed here; tests/fixtures/make_fixtures.py fetches it on demand.

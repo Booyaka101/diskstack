@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+
+# Test fixtures: the source image is downloaded and the flux is generated.
+# tests/fixtures/make_fixtures.py rebuilds all of it.
+tests/fixtures/*.img
+tests/fixtures/*.scp
+tests/fixtures/LICENSE.txt
