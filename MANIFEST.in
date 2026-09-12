@@ -1,0 +1,10 @@
+include CHANGELOG.md
+graft examples
+graft tests
+graft tools
+
+# The captures are 19 MB each and are rebuilt by make_fixtures.py.
+prune tests/fixtures
+include tests/fixtures/make_fixtures.py
+
+global-exclude *.py[cod]

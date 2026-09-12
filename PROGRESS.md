@@ -47,6 +47,12 @@ Run on this machine, not inferred:
 * Wheel and sdist build, install into a clean venv, and
   `uvx --from ./dist/diskstack-1.0.0-py3-none-any.whl diskstack --version`
   works.
+* The 1.0.0 sdist is self-contained: unpacked into a clean venv it rebuilds its
+  own fixtures and passes all 113 tests. The rebuilt captures match the ones in
+  the repo except for seven bytes, the SCP footer timestamp and the header
+  checksum over it, so the damage patterns are reproducible.
+* Three damaged captures merge back to `Transylvania.img` byte for byte, run
+  from the installed console script rather than the source tree.
 * KryoFlux streams re-emitted from `capture_a.scp` decode to the same 207
   attempts and 204 good sectors as the SCP does, byte for byte, and an `.hfe`
   written from `Transylvania.img` reads back all 720 sectors with valid
@@ -83,13 +89,15 @@ Run on this machine, not inferred:
   for three captures of a 360K disk.
 * `pyflakes diskstack tests tools` is clean outside `_vendor`.
 * Clone check (difflib over function bodies): highest pair in the product code
-  is 0.48 and is a closure counted against its own enclosing function. The
-  functions added since are all under 0.25 against everything else.
+  is 0.53 and is a closure counted against its own enclosing function. The
+  closest genuine pair is `cache.recall` against `report.read_previous` at
+  0.50, five lines each in different modules, left separate on purpose.
 
 ## Next step
 
-Publish. `python -m build` then `twine upload dist/*`. The PyPI name
-`diskstack` was free when this was written. After that, the one distribution
+Publish. 1.0.0 is tagged and both artifacts are built in `dist/`, so this is
+`twine upload dist/*` and nothing else. The PyPI name `diskstack` was free when
+this was written. After that, the one distribution
 step worth doing is a post in the Greaseweazle discussion forum or
 `r/datarecovery` describing the re-read loop, because the people who already
 own a flux reader are the only people who can have two dumps of one disk.
