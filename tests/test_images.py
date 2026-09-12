@@ -47,13 +47,19 @@ def test_an_empty_image_contributes_nothing(tmp_path, fmt):
     assert (info.candidates, info.good) == (0, 0)
 
 
-def write_imd(path: Path, fmt) -> Path:
-    """An IMD of the same disk. Its file size has nothing to do with a format."""
-    src, _ = formats.open_image(write_img(path.parent / 'src.img', set()), fmt)
-    with IMD.to_file(str(path), fmt, False, {}) as out:
-        for cyl, head in candidates.track_list(fmt):
+def write_tracks(writer, path: Path, source: Path, tracks, fmt=None) -> Path:
+    """Copy some tracks of one image into a fresh container of another kind."""
+    src, _ = formats.open_image(source, fmt)
+    with writer.to_file(str(path), fmt, False, {}) as out:
+        for cyl, head in tracks:
             out.emit_track(cyl, head, src.get_track(cyl, head))
     return path
+
+
+def write_imd(path: Path, fmt) -> Path:
+    """An IMD of the same disk. Its file size has nothing to do with a format."""
+    src = write_img(path.parent / 'src.img', set())
+    return write_tracks(IMD, path, src, candidates.track_list(fmt), fmt)
 
 
 def test_an_imd_is_not_measured_against_the_flat_image_size(tmp_path, fmt):
@@ -100,11 +106,8 @@ def test_the_extent_of_a_flux_dump_is_found_by_probing(tmp_path, decoded):
 
 
 def write_hfe(path: Path, fmt) -> Path:
-    src, _ = formats.open_image(write_img(path.parent / 'src.img', set()), fmt)
-    with HFE.to_file(str(path), fmt, False, {}) as out:
-        for cyl, head in candidates.track_list(fmt):
-            out.emit_track(cyl, head, src.get_track(cyl, head))
-    return path
+    src = write_img(path.parent / 'src.img', set())
+    return write_tracks(HFE, path, src, candidates.track_list(fmt), fmt)
 
 
 def test_an_hfe_bitstream_reads_back_with_its_crcs(tmp_path, fmt, capsys):

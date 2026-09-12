@@ -5,7 +5,7 @@ from __future__ import annotations
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
+from typing import List, Sequence
 
 import pytest
 
@@ -29,10 +29,17 @@ class Decoded:
     sources: List[candidates.SourceInfo]
     source_image: Path
 
-    def stacked(self, *names: str, vote: bool = True) -> stack.StackResult:
-        """Stack some subset of the captures, by file name."""
+    def stacked(self, *names: str, vote: bool = True,
+                extra: Sequence[candidates.Candidate] = ()) -> stack.StackResult:
+        """Stack some subset of the captures by file name, plus any extras.
+
+        `extra` is for candidates from a capture the session fixture never
+        decoded, such as a re-read of only the tracks that came out bad.
+        """
         chosen = [p for p in self.paths if not names or p.name in names]
         cands = [c for c in self.candidates if c.source in chosen]
+        cands += list(extra)
+        chosen += sorted({c.source for c in extra})
         expected = candidates.expected_sectors(self.fmt)
         sizes = {key: candidates.sector_size(self.fmt, *key) for key in expected}
         return stack.stack(cands, expected, sizes, chosen, vote=vote)

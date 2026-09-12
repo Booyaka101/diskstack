@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from diskstack import formats, report, stack
+from diskstack import candidates, formats, report, stack
+from diskstack._vendor.greaseweazle.image.scp import SCP
+
+from test_images import write_tracks
 
 
 def test_three_captures_rebuild_the_original(decoded, tmp_path: Path):
@@ -56,6 +59,31 @@ def test_two_captures_leave_a_short_re_read_list(decoded):
     assert three.counts()[stack.UNRESOLVED] == 0
     for (cyl, head) in bad_tracks:
         assert (cyl, head) not in three.bad_sectors()
+
+
+def test_a_three_track_retry_capture_finishes_the_merge(decoded, tmp_path: Path):
+    """The other half of the loop, and the reason the tool prints a trackspec.
+
+    A re-read of only the bad tracks has to stack with the full captures the
+    same way another full dump would.
+    """
+    names = ('capture_a.scp', 'capture_b.scp')
+    bad = sorted(set(decoded.stacked(*names).bad_sectors()))
+    assert bad == [(17, 0), (18, 0), (19, 0)]
+
+    full = next(p for p in decoded.paths if p.name == 'capture_c.scp')
+    retry = write_tracks(SCP, tmp_path / 'retry.scp', full, bad)
+    assert retry.stat().st_size * 10 < full.stat().st_size
+
+    extra, _ = candidates.load(retry, decoded.fmt)
+    assert {(c.cyl, c.head) for c in extra} == set(bad)
+
+    result = decoded.stacked(*names, extra=extra)
+    assert result.counts()[stack.UNRESOLVED] == 0
+    out = tmp_path / 'repaired.img'
+    formats.write_image(out, decoded.fmt, result.sector_data(),
+                        result.bad_sectors())
+    assert out.read_bytes() == decoded.source_image.read_bytes()
 
 
 def test_the_re_read_command_is_valid_greaseweazle_syntax(decoded):

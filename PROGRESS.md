@@ -30,7 +30,7 @@ Everything in the v1 brief is built and running:
 
 Run on this machine, not inferred:
 
-* `python -m pytest tests -q` - 114 passed in 50s. The suite builds real SCP
+* `python -m pytest tests -q` - 115 passed in 51s. The suite builds real SCP
   flux from a real PC floppy image and decodes it back.
 * Three damaged captures stacked into a file byte-identical to the source
   `Transylvania.img` (368640 bytes). Two captures leave exactly 6 unresolved
@@ -53,6 +53,10 @@ Run on this machine, not inferred:
   checksum over it, so the damage patterns are reproducible.
 * Three damaged captures merge back to `Transylvania.img` byte for byte, run
   from the installed console script rather than the source tree.
+* The re-read loop is tested end to end, not just described: a 705 KB SCP
+  holding only cylinders 17-19 head 0, cut from `capture_c`, stacks with the
+  two 19 MB captures and finishes the disk byte for byte. That is the workflow
+  the README leads with and nothing covered it until now.
 * The same merge again from `pip install diskstack` out of PyPI, in a fresh
   venv with no cache: 714 clean, 6 recovered by vote, exit 0, and the output
   byte-identical to `Transylvania.img`. The published wheel and sdist have the
