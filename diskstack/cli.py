@@ -242,7 +242,7 @@ def main(**opts):
         raise click.ClickException(str(exc)) from exc
     except KeyboardInterrupt:
         click.echo('Interrupted.', err=True)
-        raise SystemExit(130)
+        raise SystemExit(130) from None
 
 
 def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,

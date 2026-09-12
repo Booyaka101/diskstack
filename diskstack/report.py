@@ -152,7 +152,7 @@ def render_table(headers: Sequence[str],
 
     def line(values):
         out = []
-        for value, width, how in zip(values, widths, align):
+        for value, width, how in zip(values, widths, align, strict=True):
             out.append(value.rjust(width) if how == 'r' else value.ljust(width))
         return '  ' + '  '.join(out).rstrip()
 

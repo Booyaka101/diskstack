@@ -146,7 +146,7 @@ def majority_bytes(values: Sequence[bytes]) -> bytes:
     ordered best source first.
     """
     out = bytearray()
-    for column in zip(*values):
+    for column in zip(*values, strict=True):
         if len(set(column)) == 1:
             out.append(column[0])
             continue

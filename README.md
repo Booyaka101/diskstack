@@ -55,6 +55,9 @@ pip install diskstack
 
 Python 3.11 or newer. No hardware, no network, no configuration.
 
+Until the PyPI upload lands, `pip install
+git+https://github.com/Booyaka101/diskstack` gets you the same thing.
+
 ## Use
 
 ```
@@ -267,9 +270,10 @@ Open an issue with the `diskstack-report.json` and what the disk is.
 ## Tests
 
 ```
-pip install -e ".[test]"
+pip install -e ".[dev]"
 python tests/fixtures/make_fixtures.py     # downloads 360 KB, writes 55 MB
 python -m pytest tests -q
+ruff check .
 ```
 
 The fixture builder needs the network once. Everything else runs offline.

@@ -43,7 +43,7 @@ diskstack = "diskstack.cli:main"
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
-dev = ["pytest>=7", "ruff>=0.6"]
+dev = ["pytest>=7", "ruff>=0.16"]
 
 [tool.setuptools.packages.find]
 include = ["diskstack*"]
@@ -58,3 +58,8 @@ testpaths = ["tests"]
 [tool.ruff]
 # The vendored Greaseweazle tree is upstream's code and is not ours to restyle.
 extend-exclude = ["diskstack/_vendor"]
+
+[tool.ruff.lint]
+# Named rather than inherited, so a new ruff release cannot turn a green CI red
+# on a style rule nobody chose.
+select = ["E4", "E7", "E9", "F", "B"]

@@ -78,7 +78,7 @@ def fetch(name: str, dest: Path, *, size: int = 0, sha256: str = '') -> Path:
             data = response.read()
     except (urllib.error.URLError, OSError) as exc:
         raise SystemExit(f'could not download {url}: {exc}\n'
-                         f'Fetch it by hand and save it as {dest}.')
+                         f'Fetch it by hand and save it as {dest}.') from None
     if size and len(data) != size:
         raise SystemExit(f'{url}: expected {size} bytes, got {len(data)}')
     if sha256 and hashlib.sha256(data).hexdigest() != sha256:
