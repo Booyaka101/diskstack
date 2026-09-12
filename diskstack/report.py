@@ -223,6 +223,7 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
                 'unexpected_sectors': len(info.unexpected),
                 'bytes': info.size,
                 'expected_bytes': info.expected_size or None,
+                'cached': info.cached,
             }
             for info in sources
         ],
@@ -284,6 +285,15 @@ def warnings(sources: Sequence[SourceInfo], fmt_name: str) -> List[str]:
     return out
 
 
+def cache_note(sources: Sequence[SourceInfo]) -> List[str]:
+    """Say when a run reused a stored decode rather than reading the flux."""
+    reused = sum(1 for info in sources if info.cached)
+    if not reused:
+        return []
+    return [f'{reused} of {len(sources)} inputs came out of the cache instead '
+            f'of being decoded again. --no-cache turns that off.']
+
+
 def contested_note(result: StackResult) -> List[str]:
     """Sectors where the dumps disagreed and every reading looked good.
 
@@ -316,7 +326,8 @@ def render(result: StackResult, sources: Sequence[SourceInfo],
         rows = _track_rows(result)
         if rows:
             out += ['', 'Tracks needing attention', track_table(result)]
-    notes = warnings(sources, fmt_name) + contested_note(result)
+    notes = (warnings(sources, fmt_name) + cache_note(sources)
+             + contested_note(result))
     if notes:
         out += [''] + notes
     commands = reread_commands(result, retry_name)

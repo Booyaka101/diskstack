@@ -55,3 +55,8 @@ First release.
   the per-track pattern, before decoding any of the others.
 - Measures a KryoFlux set by the track files the reader will open, so a second
   capture sitting in the same directory is not counted in.
+- Keeps decoded flux and the detected format in `.diskstack-cache` beside the
+  output, so adding a capture to the stack only decodes the new one. Three
+  captures of a 360K disk go from 6.5 seconds to 0.4 on a repeat run.
+  `--cache DIR` moves it, `--no-cache` turns it off, and every input says in
+  the report whether it was decoded or reused.

@@ -89,6 +89,7 @@ class SourceInfo:
     unexpected: List[Tuple[int, int, int]] = field(default_factory=list)
     size: int = 0
     expected_size: int = 0
+    cached: bool = False
 
     @property
     def wrong_size(self) -> bool:

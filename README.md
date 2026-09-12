@@ -40,7 +40,10 @@ That run produced a file byte-identical to the original disk image. Repeat
 until the unresolved count reaches zero or stops moving. diskstack reads the
 report it is about to overwrite, so it tells you which of the two happened:
 either how many sectors the new capture recovered, or that nothing changed and
-another pass at the same settings is unlikely to. The full session is in
+another pass at the same settings is unlikely to. It also keeps the decoded
+flux, so the second run only decodes the capture you just added: re-running
+the three-capture merge above takes 0.4 seconds against 6.5 the first time.
+The full session is in
 [examples/console-session.txt](examples/console-session.txt) and the report it
 wrote is in [examples/diskstack-report.json](examples/diskstack-report.json).
 
@@ -175,6 +178,11 @@ stopped halfway would win the merge with 512 bytes of nothing per sector.
                                   sectors whose own CRC passes.
   -j, --jobs N                    Worker processes for decoding flux [default:
                                   one per core, up to 8]  [x>=0]
+  --cache DIR                     Where to keep decoded flux between runs
+                                  [default: .diskstack-cache beside the
+                                  output]
+  --no-cache                      Decode every flux capture again instead of
+                                  reusing the decode a previous run stored.
   --retry-name NAME               Filename used in the printed gw read
                                   command.  [default: retry.scp]
   -q, --quiet                     Print the summary and the re-read command,
@@ -197,6 +205,16 @@ diskstack a.scp b.scp -o merged.img --pll period=5:phase=60 --pll lowpass=1.5
 ```
 
 It applies to every flux container, `.scp`, `.raw` and `.hfe` alike.
+
+Decoded flux is kept in `.diskstack-cache` beside the output, along with the
+detected disk format, so a re-run only pays for the captures it has not seen.
+An entry is named for a hash of the input's bytes and of every setting that
+changes the decode, which means a fresh dump written over the same filename is
+a new entry rather than a stale hit, and a capture that moved or was renamed
+still counts as one it has seen. `--cache DIR` puts it somewhere else,
+`--no-cache` turns it off, and deleting the directory costs nothing but the
+next decode. It drops its least recently used entries once it passes 512 MB;
+three captures of a 360K disk take 377 KB.
 
 ## The report
 
@@ -222,7 +240,9 @@ and `totals` counts both across the disk.
 
 `since_last_report` holds the `recovered`, `lost` and `still_bad` counts
 against the report this run replaced, or null on the first run and whenever
-the old report covers a different set of sectors.
+the old report covers a different set of sectors. Each input carries `cached`,
+saying whether its sectors were decoded on this run or reused from an earlier
+one.
 
 ## What it does not do
 

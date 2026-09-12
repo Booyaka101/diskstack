@@ -6,6 +6,7 @@ dist/
 *.egg-info/
 .venv/
 venv/
+.diskstack-cache/
 
 # Test fixtures: the source image is downloaded and the flux is generated.
 # tests/fixtures/make_fixtures.py rebuilds all of it.

@@ -40,6 +40,8 @@ Sources
   capture_b.scp  scp      3      2061  2017       700     0
   capture_c.scp  scp      3      2060  2017       700     0
 
+2 of 3 inputs came out of the cache instead of being decoded again. --no-cache turns that off.
+
 Every sector confirmed by CRC. Nothing left to re-read.
 
 Wrote merged.img (368640 bytes) and diskstack-report.json

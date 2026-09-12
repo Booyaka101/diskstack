@@ -5,18 +5,32 @@ from __future__ import annotations
 import sys
 from concurrent.futures.process import BrokenProcessPool
 from contextlib import contextmanager
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional, Sequence, Tuple
 
 import click
 
-from diskstack import (__version__, candidates, formats, parallel, report,
-                       stack)
+from diskstack import (__version__, cache, candidates, formats, parallel,
+                       report, stack)
 from diskstack._vendor.greaseweazle.track import PLL
 from diskstack.errors import DiskStackError
 from diskstack.filler import make_filler
 
 FILL_CHOICES = ('best', 'filler', 'zero')
+
+
+@dataclass
+class Decode:
+    """Everything that decides what reading one input produces."""
+
+    fmt: object
+    fmt_name: str
+    plls: List[Optional[PLL]] = field(default_factory=lambda: [None])
+    revs: Optional[int] = None
+    detect_filler: bool = True
+    jobs: int = 1
+    cache_dir: Optional[Path] = None
 
 
 def _parse_plls(specs: Sequence[str]) -> List[Optional[PLL]]:
@@ -46,42 +60,96 @@ def reading(path: Path, steps: int, quiet: bool):
         yield lambda: bar.update(1)
 
 
-def read_one(path: Path, fmt, pll: Optional[PLL], revs: Optional[int],
-             detect_filler: bool, jobs: int, on_track
-             ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
+def decode_one(path: Path, opts: Decode, pll: Optional[PLL], on_track
+               ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
     """One pass over one file, falling back to one process if workers fail."""
     try:
-        return candidates.load(path, fmt, pll=pll, revs=revs,
-                               detect_filler=detect_filler, jobs=jobs,
-                               on_track=on_track)
+        return candidates.load(path, opts.fmt, pll=pll, revs=opts.revs,
+                               detect_filler=opts.detect_filler,
+                               jobs=opts.jobs, on_track=on_track)
     except (BrokenProcessPool, ImportError, OSError, RuntimeError) as exc:
-        if jobs <= 1:
+        if opts.jobs <= 1:
             raise
         click.echo(f'Parallel decode unavailable ({exc}); using one process.',
                    err=True)
-        return candidates.load(path, fmt, pll=pll, revs=revs,
-                               detect_filler=detect_filler, jobs=1,
+        return candidates.load(path, opts.fmt, pll=pll, revs=opts.revs,
+                               detect_filler=opts.detect_filler, jobs=1,
                                on_track=on_track)
 
 
-def load_source(path: Path, fmt, plls: Sequence[Optional[PLL]],
-                revs: Optional[int], detect_filler: bool, jobs: int = 1,
-                on_track=None
+def cache_name(path: Path, opts: Decode, pll: Optional[PLL]) -> Optional[str]:
+    """Entry this decode belongs under, or None if it is not worth caching.
+
+    Only flux is: reading a sector image is a file read, so an entry for one
+    would cost about what it saves.
+    """
+    if opts.cache_dir is None or not formats.is_flux(path):
+        return None
+    try:
+        return cache.key(formats.input_files(path, formats.kind_of(path)),
+                         cache.settings(opts.fmt_name, pll, opts.revs,
+                                        opts.detect_filler))
+    except OSError:
+        return None
+
+
+def read_one(path: Path, opts: Decode, pll: Optional[PLL], on_track
+             ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
+    """One pass over one file, taken from the cache when it is already there."""
+    name = cache_name(path, opts, pll)
+    if name is not None:
+        hit = cache.load(opts.cache_dir, name, path)
+        if hit is not None:
+            if on_track is not None:
+                for _ in candidates.track_list(opts.fmt):
+                    on_track()
+            return hit
+    cands, info = decode_one(path, opts, pll, on_track)
+    if name is not None:
+        cache.store(opts.cache_dir, name, cands, info)
+    return cands, info
+
+
+def disk_format(paths: Sequence[Path], pll: Optional[PLL],
+                cache_dir: Optional[Path]) -> Tuple[str, str]:
+    """The disk format, remembered from the last run over the same inputs.
+
+    Detection decodes the first cylinders of a flux capture, which with the
+    decodes themselves cached is the slowest thing left in a repeat run.
+    """
+    name = None
+    if cache_dir is not None:
+        files = [f for path in paths
+                 for f in formats.input_files(path, formats.kind_of(path))]
+        try:
+            name = cache.key(files, cache.settings('detect', pll, None, True))
+        except OSError:
+            name = None
+    known = (cache.recall(cache_dir, name) or {}) if name else {}
+    if (isinstance(known.get('format'), str)
+            and isinstance(known.get('detail'), str)):
+        return known['format'], known['detail']
+    fmt_name, detail = formats.detect_format(paths, pll)
+    if name is not None:
+        cache.note(cache_dir, name, {'format': fmt_name, 'detail': detail})
+    return fmt_name, detail
+
+
+def load_source(path: Path, opts: Decode, on_track=None
                 ) -> Tuple[List[candidates.Candidate], candidates.SourceInfo]:
     """Read one input file, decoding flux once per requested PLL setting.
 
     Two PLLs disagreeing about a marginal bitcell give two independent
     attempts at the same sector, which is exactly what the vote wants.
     """
-    cands, info = read_one(path, fmt, plls[0], revs, detect_filler, jobs,
-                           on_track)
+    cands, info = read_one(path, opts, opts.plls[0], on_track)
     if info.kind not in formats.FLUX_KINDS:
         return cands, info
-    for pll in plls[1:]:
-        more, extra = read_one(path, fmt, pll, revs, detect_filler, jobs,
-                               on_track)
+    for pll in opts.plls[1:]:
+        more, extra = read_one(path, opts, pll, on_track)
         cands += more
         parallel.merge_info(info, extra)
+        info.cached = info.cached and extra.cached
     return cands, info
 
 
@@ -140,6 +208,13 @@ def _list_formats(ctx, param, value):
               default=0, help='Worker processes for decoding flux '
                               '[default: one per core, up to '
                               f'{parallel.MAX_JOBS}]')
+@click.option('--cache', 'cache_dir', type=click.Path(path_type=Path),
+              metavar='DIR',
+              help='Where to keep decoded flux between runs  [default: '
+                   '.diskstack-cache beside the output]')
+@click.option('--no-cache', is_flag=True,
+              help='Decode every flux capture again instead of reusing the '
+                   'decode a previous run stored.')
 @click.option('--retry-name', default='retry.scp', show_default=True,
               metavar='NAME', help='Filename used in the printed gw read '
                                    'command.')
@@ -171,7 +246,8 @@ def main(**opts):
 
 
 def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
-        keep_filler, fill_unresolved, no_vote, jobs, retry_name, quiet):
+        keep_filler, fill_unresolved, no_vote, jobs, cache_dir, no_cache,
+        retry_name, quiet):
     paths = [Path(p) for p in inputs]
     if len(paths) < 2:
         raise DiskStackError(
@@ -193,25 +269,31 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
     if report_path is not None and report_path.resolve() == output.resolve():
         raise DiskStackError(f'{report_path}: that is the merged image. The '
                              f'report would be written over it.')
+    if cache_dir is not None and cache_dir.exists() and not cache_dir.is_dir():
+        raise DiskStackError(f'{cache_dir}: --cache wants a directory to keep '
+                             f'decoded flux in.')
     formats.check_writable(output)
 
     plls = _parse_plls(pll_specs)
+    cache_dir = (None if no_cache
+                 else cache_dir or output.parent / cache.DIR_NAME)
 
     if fmt_name:
         fmt, detail = formats.get_format(fmt_name), 'given with --format'
     else:
-        fmt_name, detail = formats.detect_format(paths, plls[0])
+        fmt_name, detail = disk_format(paths, plls[0], cache_dir)
         fmt = formats.get_format(fmt_name)
+
+    opts = Decode(fmt=fmt, fmt_name=fmt_name, plls=plls, revs=revs,
+                  detect_filler=not keep_filler,
+                  jobs=jobs or parallel.default_jobs(), cache_dir=cache_dir)
 
     all_cands, sources = [], []
     tracks = len(candidates.track_list(fmt))
-    jobs = jobs or parallel.default_jobs()
     for path in paths:
         steps = tracks * len(plls) if formats.is_flux(path) else 1
         with reading(path, steps, quiet) as on_track:
-            cands, info = load_source(path, fmt, plls, revs,
-                                      detect_filler=not keep_filler,
-                                      jobs=jobs, on_track=on_track)
+            cands, info = load_source(path, opts, on_track)
             if on_track is not None and not formats.is_flux(path):
                 on_track()
         all_cands += cands

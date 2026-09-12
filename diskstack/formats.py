@@ -250,23 +250,33 @@ def detect_format(paths: Sequence[Path],
         + ', '.join(supported_formats()))
 
 
+def kind_of(path: Path) -> Optional[str]:
+    """Which reader this extension maps to, or None if diskstack has none."""
+    return READERS.get(path.suffix.lower(), (None, None))[1]
+
+
 def is_flux(path: Path) -> bool:
     """True if this input has to be decoded rather than simply read."""
-    return READERS.get(path.suffix.lower(), (None, None))[1] in FLUX_KINDS
+    return kind_of(path) in FLUX_KINDS
+
+
+def input_files(path: Path, kind: str) -> List[Path]:
+    """Every file one input is made of. A KryoFlux input names one of a set.
+
+    The set is enumerated the way the reader opens it, one name per track, so
+    a second capture sitting in the same directory is not part of this one.
+    """
+    if kind != 'kryoflux':
+        return [path]
+    base = KryoFlux(str(path), None).basename
+    return [f for f in (Path(f'{base}{cyl:02d}.{head}.raw')
+                        for cyl in range(PROBE_CYLS) for head in (0, 1))
+            if f.exists()]
 
 
 def input_size(path: Path, kind: str) -> int:
-    """Bytes an input occupies. A KryoFlux input names one file of a set.
-
-    The set is enumerated the way the reader opens it, one name per track, so
-    a second capture sitting in the same directory is not counted in.
-    """
-    if kind != 'kryoflux':
-        return path.stat().st_size
-    base = KryoFlux(str(path), None).basename
-    files = (Path(f'{base}{cyl:02d}.{head}.raw')
-             for cyl in range(PROBE_CYLS) for head in (0, 1))
-    return sum(f.stat().st_size for f in files if f.exists())
+    """Bytes an input occupies, the whole stream set for a KryoFlux one."""
+    return sum(f.stat().st_size for f in input_files(path, kind))
 
 
 def check_readable(path: Path) -> str:
@@ -366,5 +376,6 @@ def write_image(path: Path, fmt: gw_codec.DiskDef,
 
 
 __all__ = ['Geometry', 'check_readable', 'check_writable', 'detect_format',
-           'fill_track', 'get_format', 'ibm', 'input_size', 'is_flux',
-           'match_geometry', 'open_image', 'supported_formats', 'write_image']
+           'fill_track', 'get_format', 'ibm', 'input_files', 'input_size',
+           'is_flux', 'kind_of', 'match_geometry', 'open_image',
+           'supported_formats', 'write_image']

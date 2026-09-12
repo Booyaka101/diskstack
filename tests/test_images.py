@@ -125,7 +125,8 @@ def test_repeating_pll_decodes_an_hfe_twice(tmp_path, fmt, capsys):
     capsys.readouterr()
     plls = [PLL('period=5:phase=60'), PLL('period=10:phase=40')]
 
-    cands, info = cli.load_source(path, fmt, plls, None, detect_filler=True)
+    cands, info = cli.load_source(
+        path, cli.Decode(fmt=fmt, fmt_name=FORMAT, plls=plls))
 
     once, _ = candidates.load(path, fmt)
     assert len(once) == 720

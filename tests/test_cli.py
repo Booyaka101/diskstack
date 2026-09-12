@@ -13,8 +13,9 @@ from test_filler import SECTORS, write_img
 
 FLAGS = ['-o', '--output', '-r', '--report', '--no-report', '-f', '--format',
          '--list-formats', '--pll', '--revs', '--keep-filler',
-         '--fill-unresolved', '--no-vote', '-j', '--jobs', '--retry-name',
-         '-q', '--quiet', '-V', '--version', '-h', '--help']
+         '--fill-unresolved', '--no-vote', '-j', '--jobs', '--cache',
+         '--no-cache', '--retry-name', '-q', '--quiet', '-V', '--version',
+         '-h', '--help']
 
 
 def run(*args) -> object:
