@@ -30,7 +30,7 @@ Everything in the v1 brief is built and running:
 
 Run on this machine, not inferred:
 
-* `python -m pytest tests -q` - 113 passed in 55s. The suite builds real SCP
+* `python -m pytest tests -q` - 114 passed in 50s. The suite builds real SCP
   flux from a real PC floppy image and decodes it back.
 * Three damaged captures stacked into a file byte-identical to the source
   `Transylvania.img` (368640 bytes). Two captures leave exactly 6 unresolved
@@ -48,11 +48,18 @@ Run on this machine, not inferred:
   `uvx --from ./dist/diskstack-1.0.0-py3-none-any.whl diskstack --version`
   works.
 * The 1.0.0 sdist is self-contained: unpacked into a clean venv it rebuilds its
-  own fixtures and passes all 113 tests. The rebuilt captures match the ones in
+  own fixtures and passes all 114 tests. The rebuilt captures match the ones in
   the repo except for seven bytes, the SCP footer timestamp and the header
   checksum over it, so the damage patterns are reproducible.
 * Three damaged captures merge back to `Transylvania.img` byte for byte, run
   from the installed console script rather than the source tree.
+* CI on GitHub found two bugs that 113 green tests on this machine could not.
+  Python 3.13 refuses an iterator with no `__iter__` of its own, which is every
+  Greaseweazle `TrackIter`, so the tool did not run at all on the newest
+  Python it advertises. And on Linux the cleanup after a failed cache write
+  raises ENOTDIR where Windows raises the ENOENT that was already swallowed,
+  so a function contracted never to raise, raised. Both are fixed and the
+  matrix is green on 3.11, 3.12 and 3.13.
 * KryoFlux streams re-emitted from `capture_a.scp` decode to the same 207
   attempts and 204 good sectors as the SCP does, byte for byte, and an `.hfe`
   written from `Transylvania.img` reads back all 720 sectors with valid
@@ -87,7 +94,8 @@ Run on this machine, not inferred:
   is 6.2s against 6.5s cold, so writing the entries costs about 0.3s. The
   merged image is byte-identical either way, and the cache holds 377199 bytes
   for three captures of a 360K disk.
-* `pyflakes diskstack tests tools` is clean outside `_vendor`.
+* `ruff check .` is clean; the rule set is named in pyproject.toml
+  and the vendored tree is excluded.
 * Clone check (difflib over function bodies): highest pair in the product code
   is 0.53 and is a closure counted against its own enclosing function. The
   closest genuine pair is `cache.recall` against `report.read_previous` at
@@ -95,9 +103,12 @@ Run on this machine, not inferred:
 
 ## Next step
 
-Publish. 1.0.0 is tagged and both artifacts are built in `dist/`, so this is
-`twine upload dist/*` and nothing else. The PyPI name `diskstack` was free when
-this was written. After that, the one distribution
+PyPI. The repo is at https://github.com/Booyaka101/diskstack and v1.0.0 is
+released there with both artifacts attached. The release workflow uploads to
+PyPI on a tag as soon as a `PYPI_API_TOKEN` secret exists, and skips cleanly
+without one, so this is: make the token, `gh secret set PYPI_API_TOKEN`, and
+re-run the Release workflow. The name `diskstack` was free when this was
+written. The README says so until it lands. After that, the one distribution
 step worth doing is a post in the Greaseweazle discussion forum or
 `r/datarecovery` describing the re-read loop, because the people who already
 own a flux reader are the only people who can have two dumps of one disk.
