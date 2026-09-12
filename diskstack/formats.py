@@ -19,8 +19,10 @@ from diskstack._vendor.greaseweazle.codec import codec as gw_codec
 from diskstack._vendor.greaseweazle.codec.amiga import amigados
 from diskstack._vendor.greaseweazle.codec.ibm import ibm
 from diskstack._vendor.greaseweazle.image.adf import ADF
+from diskstack._vendor.greaseweazle.image.hfe import HFE
 from diskstack._vendor.greaseweazle.image.imd import IMD
 from diskstack._vendor.greaseweazle.image.img import IMG
+from diskstack._vendor.greaseweazle.image.kryoflux import KryoFlux
 from diskstack._vendor.greaseweazle.image.scp import SCP
 from diskstack._vendor.greaseweazle.track import PLL
 
@@ -32,10 +34,17 @@ from diskstack.errors import DiskStackError
 SUPPORTED_PREFIXES = ('ibm.', 'amiga.')
 EXCLUDED_FORMATS = frozenset({'ibm.scan'})
 SCAN_CYLS = 5
+PROBE_CYLS = 84
 
 READERS = {'.scp': (SCP, 'scp'), '.img': (IMG, 'img'), '.ima': (IMG, 'img'),
-           '.adf': (ADF, 'adf'), '.imd': (IMD, 'imd'), '.st': (IMG, 'img')}
+           '.adf': (ADF, 'adf'), '.imd': (IMD, 'imd'), '.st': (IMG, 'img'),
+           '.raw': (KryoFlux, 'kryoflux'), '.hfe': (HFE, 'hfe')}
 WRITERS = {'.img': IMG, '.ima': IMG, '.adf': ADF, '.imd': IMD, '.st': IMG}
+
+# Inputs that have to be decoded, and inputs that are a flat run of sector
+# payloads with no per-sector framing at all.
+FLUX_KINDS = frozenset({'scp', 'kryoflux', 'hfe'})
+FLAT_KINDS = frozenset({'img', 'adf'})
 
 # Every standard geometry this tool supports has a distinct raw image size.
 SIZE_FORMATS = {
@@ -126,6 +135,20 @@ def _bpb_geometry(dat: bytes) -> Optional[Geometry]:
     return Geometry(total // (spt * heads), heads, spt, bps)
 
 
+def _flux_extent(image) -> Optional[Tuple[int, int]]:
+    """(cylinders, heads) a flux container holds, found by probing for tracks.
+
+    Flux readers do not agree on how to list their tracks, and the KryoFlux
+    one cannot list them at all: it goes looking for a file per track.
+    """
+    top = next((cyl for cyl in reversed(range(PROBE_CYLS))
+                if image.get_track(cyl, 0) is not None
+                or image.get_track(cyl, 1) is not None), None)
+    if top is None:
+        return None
+    return top + 1, 2 if image.get_track(0, 1) is not None else 1
+
+
 def _scan_flux_geometry(path: Path, pll: Optional[PLL]) -> Optional[Geometry]:
     """Decode the first few cylinders of a flux capture to see what is there.
 
@@ -133,12 +156,12 @@ def _scan_flux_geometry(path: Path, pll: Optional[PLL]) -> Optional[Geometry]:
     really has, which would pick a smaller format, so several tracks are
     scanned and the fullest one wins.
     """
-    image = SCP.from_file(str(path), None, {})
-    tracknrs = sorted(image.to_track)
-    if not tracknrs:
+    reader, _ = READERS[path.suffix.lower()]
+    image = reader.from_file(str(path), None, {})
+    extent = _flux_extent(image)
+    if extent is None:
         return None
-    heads = 2 if any(t & 1 for t in tracknrs) else 1
-    cyls = max(t // 2 for t in tracknrs) + 1
+    cyls, heads = extent
 
     scan_fmt = gw_codec.get_diskdef('ibm.scan')
     best = None
@@ -187,7 +210,7 @@ def detect_format(paths: Sequence[Path],
     their size and boot sector say the geometry outright, where a flux capture
     has to be decoded to find out.
     """
-    ordered = sorted(paths, key=lambda p: p.suffix.lower() == '.scp')
+    ordered = sorted(paths, key=is_flux)
     tried = []
     for path in ordered:
         suffix = path.suffix.lower()
@@ -204,7 +227,7 @@ def detect_format(paths: Sequence[Path],
                 continue
             if suffix == '.imd':
                 geom = _imd_geometry(path)
-            elif suffix == '.scp':
+            elif is_flux(path):
                 geom = _scan_flux_geometry(path, pll)
             else:
                 continue
@@ -228,7 +251,7 @@ def detect_format(paths: Sequence[Path],
 
 def is_flux(path: Path) -> bool:
     """True if this input has to be decoded rather than simply read."""
-    return READERS.get(path.suffix.lower(), (None, None))[1] == 'scp'
+    return READERS.get(path.suffix.lower(), (None, None))[1] in FLUX_KINDS
 
 
 def open_image(path: Path, fmt: gw_codec.DiskDef):
@@ -276,17 +299,22 @@ def fill_track(track, data: Dict[int, bytes], bad: Iterable[int]):
     return track
 
 
-def write_image(path: Path, fmt: gw_codec.DiskDef,
-                data: Dict[Tuple[int, int], Dict[int, bytes]],
-                bad: Dict[Tuple[int, int], Iterable[int]]) -> None:
-    """Write the merged sectors out as a sector image."""
-    cls = WRITERS.get(path.suffix.lower())
-    if cls is None:
+def check_writable(path: Path) -> None:
+    """Reject an output path now rather than after decoding every input."""
+    if path.suffix.lower() not in WRITERS:
         raise DiskStackError(
             f'{path}: cannot write that format. diskstack writes '
             + ', '.join(sorted(WRITERS)))
     if path.parent and not path.parent.exists():
         raise DiskStackError(f'{path.parent}: output directory does not exist')
+
+
+def write_image(path: Path, fmt: gw_codec.DiskDef,
+                data: Dict[Tuple[int, int], Dict[int, bytes]],
+                bad: Dict[Tuple[int, int], Iterable[int]]) -> None:
+    """Write the merged sectors out as a sector image."""
+    check_writable(path)
+    cls = WRITERS[path.suffix.lower()]
     try:
         with cls.to_file(str(path), fmt, False, {}) as out:
             for cyl, head in [(t.cyl, t.head) for t in fmt.tracks]:
@@ -302,6 +330,6 @@ def write_image(path: Path, fmt: gw_codec.DiskDef,
         raise DiskStackError(f'{path}: {exc.strerror or exc}') from exc
 
 
-__all__ = ['Geometry', 'detect_format', 'fill_track', 'get_format', 'ibm',
-           'is_flux', 'match_geometry', 'open_image', 'supported_formats',
-           'write_image']
+__all__ = ['Geometry', 'check_writable', 'detect_format', 'fill_track',
+           'get_format', 'ibm', 'is_flux', 'match_geometry', 'open_image',
+           'supported_formats', 'write_image']

@@ -183,7 +183,9 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
                 'attempts': res.attempts,
                 'good': res.good,
                 'agreement': res.agreement,
+                'discarded': res.discarded,
                 'unstable': res.unstable,
+                'method': res.method or None,
                 'sources': [{'path': str(c.source), 'rev': c.rev}
                             for c in res.sources],
             }

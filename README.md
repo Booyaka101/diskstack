@@ -58,11 +58,15 @@ Inputs are two or more dumps of the same disk, in any mix of:
 
 | what | extensions |
 | --- | --- |
-| SuperCard Pro flux | `.scp` |
+| flux | `.scp` (SuperCard Pro), `.raw` (KryoFlux streams), `.hfe` (HxC) |
 | sector images | `.img`, `.ima`, `.st`, `.adf`, `.imd` |
 
-Output is a sector image in any of those same formats, plus
-`diskstack-report.json` next to it, plus the table above on stdout.
+For KryoFlux, name any one of the per-track stream files and the rest of the
+set is picked up from the directory.
+
+Output is a sector image: `.img`, `.ima`, `.st`, `.adf` or `.imd`. Flux goes in
+but never comes out. Along with it you get `diskstack-report.json` next to the
+image and the table above on stdout.
 
 Formats understood are IBM FM and MFM (PC 160K through 2.88M, Atari ST) and
 AmigaDOS MFM. `diskstack --list-formats` prints the list. Detection is
@@ -81,17 +85,30 @@ disk do not line up: the index phase differs and so does the motor speed.
 Per sector, in order:
 
 1. **clean** - an attempt whose own CRC or checksum passes. Taken as is.
-2. **recovered by vote** - no attempt passed, so every attempt votes byte by
-   byte and the most common value at each position wins. The CRC bytes came
-   off the same damaged track, so they get voted on too. The reconstruction is
-   only accepted if it then satisfies a check value that actually came off the
-   disk. Ties go to the dump that read the rest of the disk best.
+2. **recovered by vote** - no attempt passed, so the attempts get recombined
+   into candidate payloads and the first one that satisfies a check value off
+   the disk wins. Three routes are tried, best evidence first:
+   `majority` votes byte by byte across every attempt, `per_source_majority`
+   collapses each input file to one payload first so a capture with more
+   revolutions cannot outvote the files that read the sector correctly, and
+   `cross_check` tries each individual read as it stands, which is what
+   recovers a sector whose payload was fine and whose own CRC bytes were the
+   damaged part. The CRC bytes came off the same damaged track, so they get
+   voted on too and the voted check value is tried alongside the ones read.
+   Ties go to the dump that read the rest of the disk best. The report says
+   which route it was.
 3. **unresolved** - the vote still failed. The largest cluster of attempts that
    agree exactly is written out, the sector is listed in the table, and its
    track goes into the re-read command.
 
 A sector that is good in any input is never worse in the output. There is a
 test for that.
+
+Only a handful of reconstructions are tried, deliberately. A CRC16 accepts the
+wrong payload once in 65536 tries, so every extra candidate thrown at the check
+value buys recovery at the price of a small chance of confidently writing out
+garbage. Three routes that each mean something beats a brute-force sweep over
+the contested bytes.
 
 The check value has to come off the disk, which means a stack of only sector
 images can never reach step 2. `.img` and `.adf` files carry data and nothing
@@ -107,6 +124,11 @@ settle them. The stdout note says so next to the re-read command.
 Sectors Greaseweazle filled with `-=[BAD SECTOR]=-` are treated as failed
 reads, not as data, so a `.img` from an earlier bad session still contributes
 its good sectors. `--keep-filler` turns that off.
+
+A truncated `.img` or `.adf` contributes only the sectors the file actually
+holds bytes for. The readers pad a short image out to the format's length and
+mark every sector they invented as CRC-clean, so without that check a dump that
+stopped halfway would win the merge with 512 bytes of nothing per sector.
 
 ## Options
 
@@ -169,15 +191,19 @@ contributing read came from. Plus per-input totals and the re-read trackspecs.
 {
   "cyl": 17, "head": 0, "sec_id": 4, "size": 512,
   "status": "unresolved", "attempts": 6, "good": 0, "agreement": 3,
-  "unstable": false,
+  "discarded": 0, "unstable": false, "method": null,
   "sources": [{"path": "capture_a.scp", "rev": 0}]
 }
 ```
 
+`method` names the route that rebuilt a recovered sector and is null for any
+other status. `discarded` counts attempts thrown away because they decoded to
+the wrong length for the sector.
+
 ## What it does not do
 
 v1 is deliberately narrow. No GCR, so no Apple II and no Commodore. No writing
-`.scp` back out. No hardware access, so nothing here talks to a Greaseweazle
+flux back out. No hardware access, so nothing here talks to a Greaseweazle
 or a KryoFlux. No copy-protection preservation: this produces sector images,
 which is the wrong container for weak bits and long tracks. No network calls.
 

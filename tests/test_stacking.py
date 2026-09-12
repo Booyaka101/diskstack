@@ -23,6 +23,14 @@ def test_every_tier_is_exercised(decoded):
     assert counts[stack.CLEAN] > 0
 
 
+def test_the_recovered_sectors_say_how_they_were_rebuilt(decoded):
+    recovered = [r for r in decoded.stacked().resolutions
+                 if r.status == stack.VOTED]
+    assert recovered
+    assert {r.method for r in recovered} <= set(stack.METHODS)
+    assert all(r.method for r in recovered)
+
+
 def test_no_sector_good_in_an_input_comes_out_bad(decoded):
     """A sector any input read cleanly must survive the merge untouched."""
     known = {}

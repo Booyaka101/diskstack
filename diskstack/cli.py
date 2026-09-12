@@ -149,15 +149,17 @@ def _list_formats(ctx, param, value):
 def main(**opts):
     """Merge several dumps of one floppy disk into the best possible image.
 
-    INPUTS are two or more files of the same disk, any mix of SuperCard Pro
-    flux captures and decoded sector images:
+    INPUTS are two or more files of the same disk, any mix of flux captures
+    (.scp, .raw, .hfe) and decoded sector images (.img, .ima, .st, .adf,
+    .imd):
 
         diskstack disk_a.scp disk_b.scp disk_c.img -o merged.img
 
     Every sector is taken from whichever read got a passing CRC. Sectors no
-    read got right are reconstructed by a byte-wise majority vote across all
-    the attempts, and diskstack prints a gw read command naming only the
-    tracks that are still bad, so the next pass over the disk is short.
+    read got right are rebuilt from the attempts and kept only if the result
+    satisfies a check value off the disk, and diskstack prints a gw read
+    command naming only the tracks that are still bad, so the next pass over
+    the disk is short.
     """
     try:
         run(**opts)
@@ -189,6 +191,7 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
                              f'the merge over a dump would destroy it.')
     if report_path is not None and report_path.resolve() in seen:
         raise DiskStackError(f'{report_path}: that is one of the inputs.')
+    formats.check_writable(output)
 
     plls = _parse_plls(pll_specs)
 
@@ -221,8 +224,7 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
     expected = candidates.expected_sectors(fmt)
     sizes = {key: candidates.sector_size(fmt, *key) for key in expected}
     for info in sources:
-        info.size = info.path.stat().st_size
-        if info.kind != 'scp':
+        if info.kind in formats.FLAT_KINDS:
             info.expected_size = sum(sizes.values())
     result = stack.stack(all_cands, expected, sizes,
                          [info.path for info in sources], vote=not no_vote)

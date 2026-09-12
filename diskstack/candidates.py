@@ -19,7 +19,7 @@ import struct
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import (Callable, Dict, Iterator, List, Optional, Sequence,
-                    Tuple)
+                    Set, Tuple)
 
 from diskstack._vendor.greaseweazle import error as gw_error
 from diskstack._vendor.greaseweazle.codec import codec as gw_codec
@@ -243,11 +243,47 @@ def flux_candidates(image, fmt: gw_codec.DiskDef, source: Path,
                                     pll, revs)
 
 
+def _img_layout(track) -> List[Tuple[int, int]]:
+    """(sector id, byte length) in the order a raw sector image stores them."""
+    if isinstance(track, amigados.AmigaDOS):
+        return [(i, 512) for i in range(track.nsec)]
+    bps = getattr(track, 'img_bps', None)
+    return [(s.idam.r, bps or len(s.dam.data))
+            for s in sorted(track.sectors, key=lambda s: s.idam.r)]
+
+
+def backed_by_file(image, fmt: gw_codec.DiskDef,
+                   size: int) -> Set[Tuple[int, int, int]]:
+    """Sectors of a raw image the file actually holds the bytes for.
+
+    A short image is zero-filled to the format's length by the reader, with
+    every fabricated sector marked CRC-clean, so without this a truncated dump
+    would win the merge outright with 512 bytes of nothing.
+    """
+    order = image.track_list() if hasattr(image, 'track_list') else None
+    out, pos = set(), 0
+    for cyl, head in order or track_list(fmt):
+        track = image.get_track(cyl, head)
+        if track is None:
+            continue
+        for sec_id, length in _img_layout(track):
+            if pos + length <= size:
+                out.add((cyl, head, sec_id))
+            pos += length
+    return out
+
+
 def _image_track_candidates(track, cyl: int, head: int, source: Path,
-                            detect_filler: bool,
-                            info: SourceInfo) -> Iterator[Candidate]:
+                            detect_filler: bool, info: SourceInfo,
+                            backed: Optional[Set[Tuple[int, int, int]]] = None
+                            ) -> Iterator[Candidate]:
+    def present(sec_id: int) -> bool:
+        return backed is None or (cyl, head, sec_id) in backed
+
     if isinstance(track, amigados.AmigaDOS):
         for sec_id, sec in enumerate(track.sector):
+            if not present(sec_id):
+                continue
             data = bytes(512) if sec is None else bytes(sec[1])
             ok = sec is not None and not (detect_filler and is_filler(data))
             info.candidates += 1
@@ -262,6 +298,8 @@ def _image_track_candidates(track, cyl: int, head: int, source: Path,
         mode = getattr(track, 'mode', None) or track.track.mode
     codec_name = _IBM_MODE[mode]
     for sec in track.sectors:
+        if not present(sec.idam.r):
+            continue
         data = bytes(sec.dam.data)
         ok = sec.dam.crc == 0 and not (detect_filler and is_filler(data))
         info.candidates += 1
@@ -273,22 +311,27 @@ def _image_track_candidates(track, cyl: int, head: int, source: Path,
 
 
 def image_candidates(image, fmt: gw_codec.DiskDef, source: Path,
-                     info: SourceInfo,
-                     detect_filler: bool = True) -> Iterator[Candidate]:
+                     info: SourceInfo, detect_filler: bool = True,
+                     raw_size: Optional[int] = None) -> Iterator[Candidate]:
     """Every sector of an already-decoded image, filler counted as unread.
 
     Decoded images carry no CRC, so a sector is trusted unless the format can
     say otherwise (IMD's error flag) or it holds Greaseweazle's bad-sector
     filler.  With no check value, these attempts can never confirm a voted
     reconstruction -- only supply bytes to vote on.
+
+    ``raw_size`` is the file's size for the flat formats, where the tail of a
+    short file is padding rather than data.
     """
     info.revolutions = 1
+    backed = (None if raw_size is None
+              else backed_by_file(image, fmt, raw_size))
     for cyl, head in track_list(fmt):
         track = image.get_track(cyl, head)
         if track is None:
             continue
         yield from _image_track_candidates(track, cyl, head, source,
-                                           detect_filler, info)
+                                           detect_filler, info, backed)
 
 
 def track_list(fmt: gw_codec.DiskDef) -> List[Tuple[int, int]]:
@@ -331,11 +374,13 @@ def load(path: Path, fmt: gw_codec.DiskDef, *, pll: Optional[PLL] = None,
     from diskstack import formats, parallel  # circular at module scope
 
     image, kind = formats.open_image(path, fmt)
-    info = SourceInfo(path=path, kind=kind)
+    info = SourceInfo(path=path, kind=kind, size=path.stat().st_size)
     try:
-        if kind != 'scp':
+        if kind not in formats.FLUX_KINDS:
+            flat = info.size if kind in formats.FLAT_KINDS else None
             cands = list(image_candidates(image, fmt, path, info,
-                                          detect_filler=detect_filler))
+                                          detect_filler=detect_filler,
+                                          raw_size=flat))
         elif jobs > 1:
             cands = parallel.flux_candidates(path, fmt, info, pll=pll,
                                              revs=revs, jobs=jobs,

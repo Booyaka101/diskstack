@@ -10,8 +10,9 @@ both differ.
 Three tiers per sector:
 
 1. any attempt whose own CRC or checksum passes wins outright;
-2. otherwise every attempt votes byte by byte, and the reconstruction is
-   accepted if it now satisfies a check value that came off the disk;
+2. otherwise the attempts are recombined into candidate payloads -- a byte-wise
+   majority, then one vote per input file, then each read's own bytes -- and the
+   first payload that satisfies a check value off the disk wins;
 3. otherwise the largest cluster of attempts that agree exactly is emitted and
    the sector is reported unresolved.
 """
@@ -21,7 +22,7 @@ from __future__ import annotations
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, Iterable, List, Sequence, Tuple
+from typing import Dict, Iterable, Iterator, List, Sequence, Tuple
 
 from diskstack.candidates import Candidate, verify_sector
 from diskstack.filler import make_filler
@@ -32,6 +33,9 @@ UNRESOLVED = 'unresolved'
 MISSING = 'missing'
 
 STATUSES = (CLEAN, VOTED, UNRESOLVED, MISSING)
+
+# How a tier 2 payload was put back together, best evidence first.
+METHODS = ('majority', 'per_source_majority', 'cross_check')
 
 
 @dataclass(frozen=True)
@@ -58,6 +62,7 @@ class Resolution:
     sources: List[Contribution] = field(default_factory=list)
     discarded: int = 0
     unstable: bool = False
+    method: str = ''
 
     @property
     def key(self) -> Tuple[int, int, int]:
@@ -177,6 +182,36 @@ def _check_trials(group: Sequence[Candidate]) -> List[Tuple[int, bytes]]:
     return trials
 
 
+def _per_source(group: Sequence[Candidate]) -> List[bytes]:
+    """One payload per input file, best source first."""
+    by_source: Dict[Path, List[bytes]] = {}
+    for cand in group:
+        by_source.setdefault(cand.source, []).append(cand.data)
+    return [majority_bytes(v) for v in by_source.values()]
+
+
+def reconstructions(group: Sequence[Candidate]) -> Iterator[Tuple[str, bytes]]:
+    """Payloads worth testing against the check values that came off the disk.
+
+    The plain majority is what a vote means and comes first.  The other two
+    cover what it cannot express: a capture with more revolutions than the
+    rest drowning out the sources that read the sector correctly, and a read
+    whose payload is fine but whose own check bytes were the damaged part.
+    """
+    payloads = [c.data for c in group]
+    plain, per_source = METHODS[:2]
+    seen = set()
+    for method, data in [(plain, majority_bytes(payloads)),
+                         (per_source, majority_bytes(_per_source(group)))]:
+        if data not in seen:
+            seen.add(data)
+            yield method, data
+    for data in payloads:
+        if data not in seen:
+            seen.add(data)
+            yield METHODS[2], data
+
+
 def unstable(group: Sequence[Candidate]) -> bool:
     """True if some input read this sector two different ways on its own.
 
@@ -212,13 +247,16 @@ def resolve(key: Tuple[int, int, int], size: int,
         return res
 
     if vote and len(usable) > 1:
-        voted = majority_bytes([c.data for c in usable])
         codec = usable[0].codec
-        for mark, check in _check_trials(usable):
-            if verify_sector(codec, mark, voted, check):
-                res.data, res.status = voted, VOTED
-                res.agreement = sum(1 for c in usable if c.data == voted)
-                res.sources = [Contribution(c.source, c.rev) for c in usable]
+        trials = _check_trials(usable)
+        for method, data in reconstructions(usable):
+            if any(verify_sector(codec, mark, data, check)
+                   for mark, check in trials):
+                res.data, res.status, res.method = data, VOTED, method
+                matched = [c for c in usable if c.data == data]
+                res.agreement = len(matched)
+                res.sources = [Contribution(c.source, c.rev)
+                               for c in matched or usable]
                 return res
 
     data, agree = largest_cluster([c.data for c in usable])

@@ -89,14 +89,31 @@ def test_diskstack_does_not_write_flux(tmp_path: Path):
     result = run(a, b, '-o', tmp_path / 'out.scp')
     assert result.exit_code != 0
     assert 'cannot write that format' in result.output
+    assert 'Reading' not in result.output, 'rejected only after the work'
 
 
-def test_a_truncated_image_is_a_message_not_a_traceback(tmp_path: Path):
+def test_an_unwritable_output_directory_is_caught_before_reading(tmp_path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = write_img(tmp_path / 'b.img', set())
+    result = run(a, b, '-o', tmp_path / 'nope' / 'out.img')
+    assert result.exit_code != 0
+    assert 'output directory does not exist' in result.output
+    assert 'Reading' not in result.output
+
+
+def test_a_truncated_image_contributes_only_what_it_holds(tmp_path: Path):
+    """The tail of a short image is the reader padding it, not disk contents."""
     a = write_img(tmp_path / 'a.img', set())
     b = tmp_path / 'b.img'
     b.write_bytes(a.read_bytes()[:1000])
-    result = run(a, b, '-o', tmp_path / 'out.img', '-f', 'ibm.360')
+    result = run(a, b, '-o', tmp_path / 'out.img', '-f', 'ibm.360',
+                 '--no-report')
     assert 'Traceback' not in result.output
+    assert result.exit_code == 0, result.output
+    row = next(line for line in result.output.splitlines()
+               if line.strip().startswith('b.img'))
+    assert row.split()[2:5] == ['1', '1', '1'], row
+    assert (tmp_path / 'out.img').read_bytes() == a.read_bytes()
 
 
 def test_merging_two_images_and_writing_the_report(tmp_path: Path):

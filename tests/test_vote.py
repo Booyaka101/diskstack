@@ -134,3 +134,44 @@ def test_two_captures_that_each_read_the_same_bytes_are_not_unstable():
 
     assert res.status == stack.UNRESOLVED
     assert not res.unstable
+
+
+def test_a_capture_with_more_revolutions_cannot_outvote_the_others():
+    """Five bad revolutions of one capture against one good read each of two."""
+    good = bytes(range(256)) * 2
+    check = crc_bytes(good)
+    group = [candidate(flip_bit(good, 0, 1), check, 'a.scp', rev=rev)
+             for rev in range(5)]
+    group += [candidate(flip_bit(good, 100, 3), check, 'b.scp'),
+              candidate(flip_bit(good, 200, 5), check, 'c.scp')]
+
+    res = stack.resolve((3, 0, 5), 512, group)
+
+    assert stack.majority_bytes([c.data for c in group]) != good
+    assert res.status == stack.VOTED
+    assert res.method == 'per_source_majority'
+    assert res.data == good
+
+
+def test_a_read_whose_own_crc_was_the_damaged_part_is_cross_checked():
+    good = bytes(range(256)) * 2
+    check = crc_bytes(good)
+    group = [candidate(bytes(512), check, 'wrecked.scp'),
+             candidate(good, flip_bit(check, 0, 2), 'torn_crc.scp')]
+
+    res = stack.resolve((3, 0, 5), 512, group)
+
+    assert res.status == stack.VOTED
+    assert res.method == 'cross_check'
+    assert res.data == good
+    assert [c.source.name for c in res.sources] == ['torn_crc.scp']
+    assert res.agreement == 1
+
+
+def test_a_plain_majority_still_wins_first():
+    good = bytes(range(256)) * 2
+    check = crc_bytes(good)
+    group = [candidate(flip_bit(good, offset, bit), check, f'dump_{i}.scp')
+             for i, (offset, bit) in enumerate([(0, 0), (100, 3), (511, 7)])]
+
+    assert stack.resolve((3, 0, 5), 512, group).method == 'majority'

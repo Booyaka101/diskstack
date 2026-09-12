@@ -8,9 +8,12 @@ Everything in the v1 brief is built and running:
 
 * `diskstack/cli.py` - click entry point, every flag documented in `--help`.
 * `diskstack/candidates.py` - one `Candidate` per sector per revolution per
-  input, for SCP flux and for `.img` / `.ima` / `.st` / `.adf` / `.imd`.
-* `diskstack/stack.py` - the three tiers: CRC-clean, recovered by byte-wise
-  vote, unresolved.
+  input, for `.scp` / `.raw` / `.hfe` flux and for `.img` / `.ima` / `.st` /
+  `.adf` / `.imd`. A short flat image contributes only the sectors its bytes
+  actually cover.
+* `diskstack/stack.py` - the three tiers: CRC-clean, recovered from one of
+  three reconstruction routes that has to satisfy a check value off the disk,
+  unresolved.
 * `diskstack/filler.py` - Greaseweazle's `-=[BAD SECTOR]=-` counted as a
   failed read, not as data.
 * `diskstack/formats.py` - format detection, image open and image write.
@@ -25,7 +28,7 @@ Everything in the v1 brief is built and running:
 
 Run on this machine, not inferred:
 
-* `python -m pytest tests -q` - 61 passed in 19s. The suite builds real SCP
+* `python -m pytest tests -q` - 73 passed in 26s. The suite builds real SCP
   flux from a real PC floppy image and decodes it back.
 * Three damaged captures stacked into a file byte-identical to the source
   `Transylvania.img` (368640 bytes). Two captures leave exactly 6 unresolved
@@ -42,9 +45,18 @@ Run on this machine, not inferred:
 * Wheel and sdist build, install into a clean venv, and
   `uvx --from ./dist/diskstack-1.0.0-py3-none-any.whl diskstack --version`
   works.
+* KryoFlux streams re-emitted from `capture_a.scp` decode to the same 207
+  attempts and 204 good sectors as the SCP does, byte for byte, and an `.hfe`
+  written from `Transylvania.img` reads back all 720 sectors with valid
+  on-disk CRCs and auto-detects as ibm.360. Both agree between `-j 1` and
+  `-j 4`.
+* The truncated-image fix, measured: a 4 KB `short.img` used to offer 720
+  sectors, 716 of them zeroes marked CRC-clean, and a 0-byte file supplied 123
+  sectors to a real merge. Now 8 and 0. An intact image is unchanged at 720.
 * `pyflakes diskstack tests tools` is clean outside `_vendor`.
 * Clone check (difflib over function bodies): highest pair in the product code
-  is 0.48 and is a closure counted against its own enclosing function.
+  is 0.48 and is a closure counted against its own enclosing function. The
+  functions added since are all under 0.25 against everything else.
 
 ## Next step
 
@@ -63,9 +75,12 @@ validation story.
 * **A decoded-candidate cache.** Re-running with one more capture re-decodes
   the captures that have not changed. A `.diskstack-cache` keyed on file hash
   plus PLL settings would make the loop feel instant.
-* **More input formats.** KryoFlux `.raw` streams, HxC `.hfe`, Applesauce
-  `.a2r`. All are flux containers Greaseweazle already reads, so the work is
-  format detection and geometry, not decoding.
+* **Applesauce `.a2r` input.** KryoFlux `.raw` and HxC `.hfe` are in; `.a2r`
+  is the other flux container the vendored tree reads. Left out because the
+  reader is read-only and A2R3 only, so a fixture would have to come from
+  someone's real capture, and most A2R files are Apple II GCR, which diskstack
+  cannot decode anyway. Worth doing the day somebody turns up with an A2R of a
+  PC or Amiga disk.
 * **GCR.** Apple II and Commodore. Explicitly out of scope for v1, and the
   vote needs a per-sector checksum, which GCR formats do have.
 * **Flux output.** Writing a merged `.scp` rather than a sector image. This is

@@ -31,13 +31,14 @@ def _init(path: Path, fmt: gw_codec.DiskDef, pll: Optional[PLL],
           revs: Optional[int]) -> None:
     from diskstack import formats
 
-    image, _ = formats.open_image(path, fmt)
-    _worker.update(path=path, fmt=fmt, image=image, pll=pll, revs=revs)
+    image, kind = formats.open_image(path, fmt)
+    _worker.update(path=path, fmt=fmt, image=image, kind=kind, pll=pll,
+                   revs=revs)
 
 
 def _decode(track: Tuple[int, int]) -> Tuple[List[Candidate], SourceInfo]:
     cyl, head = track
-    info = SourceInfo(path=_worker['path'], kind='scp')
+    info = SourceInfo(path=_worker['path'], kind=_worker['kind'])
     cands = track_candidates(_worker['image'], _worker['fmt'], cyl, head,
                              _worker['path'], info, _worker['pll'],
                              _worker['revs'])
