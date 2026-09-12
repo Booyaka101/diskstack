@@ -33,16 +33,17 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/cbosch101/diskstack"
-Repository = "https://github.com/cbosch101/diskstack"
-Issues = "https://github.com/cbosch101/diskstack/issues"
-Changelog = "https://github.com/cbosch101/diskstack/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/Booyaka101/diskstack"
+Repository = "https://github.com/Booyaka101/diskstack"
+Issues = "https://github.com/Booyaka101/diskstack/issues"
+Changelog = "https://github.com/Booyaka101/diskstack/blob/main/CHANGELOG.md"
 
 [project.scripts]
 diskstack = "diskstack.cli:main"
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
+dev = ["pytest>=7", "ruff>=0.6"]
 
 [tool.setuptools.packages.find]
 include = ["diskstack*"]
@@ -53,3 +54,7 @@ include = ["diskstack*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff]
+# The vendored Greaseweazle tree is upstream's code and is not ours to restyle.
+extend-exclude = ["diskstack/_vendor"]

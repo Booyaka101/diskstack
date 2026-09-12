@@ -1,0 +1,58 @@
+name: Release
+
+# Builds diskstack for a v* tag, attaches the artifacts to the GitHub release,
+# and publishes to PyPI when a token is configured.
+#
+# Without PYPI_API_TOKEN the tests, the build and twine check still run as
+# release validation and the upload skips cleanly, so a tag push never red-Xs
+# just because the account is not wired up yet.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]" build twine
+      - run: ruff check .
+      - run: python tests/fixtures/make_fixtures.py
+      - run: pytest -q
+      - run: python -m build
+      - run: python -m twine check dist/*
+
+      - name: Attach the artifacts to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # The newest changelog section, which is this version's.
+          awk '/^## /{ if (seen++) exit } seen' CHANGELOG.md > notes.md
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" \
+              --title "diskstack ${GITHUB_REF_NAME#v}" --notes-file notes.md
+          fi
+          gh release upload "$GITHUB_REF_NAME" dist/* --clobber
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          if [ -z "${TWINE_PASSWORD:-}" ]; then
+            echo "No PYPI_API_TOKEN configured. The artifacts are on the" \
+                 "release; upload them with twine when you are ready." \
+                 >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python -m twine upload --skip-existing dist/*

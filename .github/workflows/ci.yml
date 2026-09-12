@@ -1,0 +1,59 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} py${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, python: "3.11" }
+          - { os: ubuntu-latest, python: "3.13" }
+          - { os: windows-latest, python: "3.12" }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - run: ruff check .
+
+      # The 55 MB of flux is generated here, not stored. Only the 360 KB source
+      # image comes off the network, and make_fixtures.py pins its sha256.
+      - name: Cache the source disk image
+        uses: actions/cache@v4
+        with:
+          path: tests/fixtures/Transylvania.img
+          key: fixture-source-${{ hashFiles('tests/fixtures/make_fixtures.py') }}
+      - run: python tests/fixtures/make_fixtures.py
+      - run: pytest -q
+
+  wheel:
+    name: wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - name: The sdist has to be able to run its own tests
+        run: |
+          tar tzf dist/*.tar.gz | grep -q 'tests/conftest.py'
+          tar tzf dist/*.tar.gz | grep -q 'tests/fixtures/make_fixtures.py'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
