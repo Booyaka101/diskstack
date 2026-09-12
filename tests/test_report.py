@@ -23,6 +23,7 @@ def make_result(bad: dict) -> stack.StackResult:
                     data=bytes(512),
                     status=stack.UNRESOLVED if unresolved else stack.CLEAN,
                     attempts=2, good=0 if unresolved else 2, agreement=2,
+                    verified=not unresolved,
                     sources=[] if unresolved
                             else [stack.Contribution(source, 0)]))
     supplied = sum(1 for r in resolutions if r.resolved)
@@ -91,7 +92,8 @@ def test_report_round_trips_through_json(tmp_path: Path):
     assert loaded['schema'] == report.SCHEMA_VERSION
     assert loaded['totals'] == {'sectors': 16, 'clean': 15,
                                 'recovered_by_vote': 0, 'unresolved': 1,
-                                'missing': 0}
+                                'missing': 0, 'verified': 15,
+                                'contested': 0}
     assert len(loaded['sectors']) == 16
     assert loaded['reread']['tracks'] == ['c=0:h=1']
     assert loaded['inputs'][0]['path'] == 'a.scp'
@@ -121,6 +123,29 @@ def test_weak_bits_are_called_out_next_to_the_re_read_command():
 
     assert 'gw read retry.scp' in text
     assert '1 of those sectors read differently on every pass' in text
+
+
+def test_sectors_the_dumps_disagreed_about_are_called_out():
+    result = make_result({})
+    for res in result.resolutions[:2]:
+        res.contested = True
+
+    text = report.render(result, sources(), 'ibm.360', 'test')
+
+    assert '2 sectors came out good in more than one dump' in text
+    assert 'c0:h0:s1, c0:h0:s2' in text
+
+
+def test_a_merge_of_sector_images_does_not_claim_a_crc_confirmed_it():
+    """Only flux and IMD carry a check value; .img and .adf carry none."""
+    result = make_result({})
+    for res in result.resolutions:
+        res.verified = False
+
+    text = report.render(result, sources(), 'ibm.360', 'test')
+
+    assert 'confirmed by CRC' not in text
+    assert '16 of these sectors came from inputs that carry no check value'         in text
 
 
 def test_a_steady_bad_sector_gets_no_weak_bit_note():

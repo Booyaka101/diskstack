@@ -205,3 +205,37 @@ def test_jobs_is_accepted(tmp_path: Path):
     result = run(a, b, '-o', tmp_path / 'merged.img', '--no-report',
                  '--jobs', '2')
     assert result.exit_code == 0, result.output
+
+
+def test_the_report_may_not_overwrite_the_merged_image(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = write_img(tmp_path / 'b.img', set())
+    out = tmp_path / 'out.img'
+    result = run(a, b, '-o', out, '-r', out)
+    assert result.exit_code != 0
+    assert 'that is the merged image' in result.output
+    assert not out.exists()
+
+
+def test_two_images_that_disagree_are_flagged_contested(tmp_path: Path):
+    """Nothing in a sector image can arbitrate this, so say so out loud."""
+    a = write_img(tmp_path / 'a.img', set())
+    raw = bytearray(a.read_bytes())
+    raw[19 * 512:20 * 512] = bytes(512)
+    b = tmp_path / 'b.img'
+    b.write_bytes(bytes(raw))
+    out = tmp_path / 'merged.img'
+    result = run(a, b, '-o', out)
+
+    assert result.exit_code == 0, result.output
+    assert '1 sector came out good in more than one dump' in result.output
+    assert 'c1:h0:s2' in result.output
+    assert 'confirmed by CRC' not in result.output
+
+    report = json.loads((tmp_path / 'diskstack-report.json').read_text())
+    assert report['totals'] == {'sectors': 720, 'clean': 720,
+                                'recovered_by_vote': 0, 'unresolved': 0,
+                                'missing': 0, 'verified': 0, 'contested': 1}
+    sector = next(s for s in report['sectors'] if s['contested'])
+    assert (sector['cyl'], sector['head'], sector['sec_id']) == (1, 0, 2)
+    assert out.read_bytes() == a.read_bytes(), 'the best-ranked dump wins'

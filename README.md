@@ -116,6 +116,16 @@ to verify it with, so identical bytes in two images prove only that both dumps
 read the same thing. Mixing in one flux capture is what gives the vote
 something to check against.
 
+That distinction runs through the whole report. A sector is `verified` when
+some read of it satisfied a check value off the disk, and a merge of sector
+images alone never gets that, so the closing line says the sectors came from
+inputs that carry no check value instead of claiming a CRC confirmed them. A
+sector is `contested` when two dumps both looked good and held different
+bytes. Nothing in a sector image can arbitrate that, so diskstack keeps the
+best-ranked dump's copy, prints which sectors it happened to, and leaves the
+judgement to you. It is what deliberate weak bits look like, and also what two
+dumps of two different disks look like.
+
 A sector the merge could not confirm is marked `unstable` if one capture read
 it two different ways across its own revolutions. That is what weak bits look
 like, and they are usually deliberate, so more passes over the disk will not
@@ -180,6 +190,8 @@ they become independent attempts that the vote can use:
 diskstack a.scp b.scp -o merged.img --pll period=5:phase=60 --pll lowpass=1.5
 ```
 
+It applies to every flux container, `.scp`, `.raw` and `.hfe` alike.
+
 ## The report
 
 `diskstack-report.json` carries one entry per sector of the disk: its status,
@@ -191,14 +203,16 @@ contributing read came from. Plus per-input totals and the re-read trackspecs.
 {
   "cyl": 17, "head": 0, "sec_id": 4, "size": 512,
   "status": "unresolved", "attempts": 6, "good": 0, "agreement": 3,
-  "discarded": 0, "unstable": false, "method": null,
+  "discarded": 0, "unstable": false, "contested": false, "verified": false,
+  "method": null,
   "sources": [{"path": "capture_a.scp", "rev": 0}]
 }
 ```
 
 `method` names the route that rebuilt a recovered sector and is null for any
 other status. `discarded` counts attempts thrown away because they decoded to
-the wrong length for the sector.
+the wrong length for the sector. `verified` and `contested` are the two above,
+and `totals` counts both across the disk.
 
 ## What it does not do
 

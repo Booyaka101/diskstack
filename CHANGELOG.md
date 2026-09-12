@@ -34,3 +34,14 @@ First release.
   CRC-clean, which would otherwise win the merge with zeroes.
 - Rejects an output path it cannot write before reading any input rather than
   after decoding all of them.
+- Calls a sector verified only when some read of it satisfied a check value off
+  the disk, and ends a merge of sector images by saying nothing confirmed them
+  instead of claiming a CRC did.
+- Flags a sector contested when two dumps both read it cleanly and disagreed,
+  keeps the best-ranked dump's copy, and names those sectors on stdout, since
+  nothing in a sector image can arbitrate between them.
+- Applies a repeated `--pll` to every flux container. KryoFlux streams and HFE
+  images previously took the first setting and ignored the rest.
+- Refuses a report path equal to the merged image.
+- Counts a KryoFlux input as the whole stream set rather than the single file
+  named on the command line.

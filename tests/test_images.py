@@ -6,10 +6,11 @@ from pathlib import Path
 
 import pytest
 
-from diskstack import candidates, formats
+from diskstack import candidates, cli, formats
 from diskstack._vendor.greaseweazle.image.hfe import HFE
 from diskstack._vendor.greaseweazle.image.imd import IMD
 from diskstack._vendor.greaseweazle.image.kryoflux import KryoFlux
+from diskstack._vendor.greaseweazle.track import PLL
 
 from test_filler import FORMAT, SECSZ, write_img
 
@@ -116,3 +117,28 @@ def test_an_hfe_bitstream_reads_back_with_its_crcs(tmp_path, fmt, capsys):
     # Unlike .img, an HFE carries the on-disk CRC, so it can confirm a vote.
     assert all(c.check and c.recheck(c.data) for c in cands)
     assert formats.detect_format([path])[0] == FORMAT
+
+
+def test_repeating_pll_decodes_an_hfe_twice(tmp_path, fmt, capsys):
+    """Every flux container gets the extra decodes, not just SCP."""
+    path = write_hfe(tmp_path / 'disk.hfe', fmt)
+    capsys.readouterr()
+    plls = [PLL('period=5:phase=60'), PLL('period=10:phase=40')]
+
+    cands, info = cli.load_source(path, fmt, plls, None, detect_filler=True)
+
+    once, _ = candidates.load(path, fmt)
+    assert len(once) == 720
+    assert (info.candidates, len(cands)) == (1440, 1440)
+    assert [c.key for c in cands] == [c.key for c in once] * 2
+
+
+def test_a_kryoflux_input_is_measured_as_the_whole_set(tmp_path, decoded):
+    """One .raw names a file per track; the report should not quote just one."""
+    stream = write_kryoflux(tmp_path / 'dump00.0.raw', decoded.paths[0])
+    _, info = candidates.load(stream, decoded.fmt)
+
+    files = sorted(tmp_path.glob('dump*.raw'))
+    assert len(files) == KF_CYLS * 2
+    assert info.size == sum(f.stat().st_size for f in files)
+    assert info.size > stream.stat().st_size

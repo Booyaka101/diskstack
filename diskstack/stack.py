@@ -63,6 +63,8 @@ class Resolution:
     discarded: int = 0
     unstable: bool = False
     method: str = ''
+    verified: bool = False
+    contested: bool = False
 
     @property
     def key(self) -> Tuple[int, int, int]:
@@ -240,10 +242,16 @@ def resolve(key: Tuple[int, int, int], size: int,
 
     clean = [c for c in usable if c.data_crc_ok]
     if clean:
-        data, agree = largest_cluster([c.data for c in clean])
-        res.data, res.status, res.agreement = data, CLEAN, agree
-        res.sources = [Contribution(c.source, c.rev) for c in clean
-                       if c.data == data]
+        # A read that satisfied a check value off the disk outranks one that
+        # was merely never contradicted, which is all a sector image can say.
+        verified = [c for c in clean if c.check]
+        data, _ = largest_cluster([c.data for c in verified or clean])
+        matched = [c for c in clean if c.data == data]
+        res.data, res.status = data, CLEAN
+        res.agreement = len(matched)
+        res.verified = any(c.check for c in matched)
+        res.contested = len(matched) < len(clean)
+        res.sources = [Contribution(c.source, c.rev) for c in matched]
         return res
 
     if vote and len(usable) > 1:
@@ -253,6 +261,7 @@ def resolve(key: Tuple[int, int, int], size: int,
             if any(verify_sector(codec, mark, data, check)
                    for mark, check in trials):
                 res.data, res.status, res.method = data, VOTED, method
+                res.verified = True
                 matched = [c for c in usable if c.data == data]
                 res.agreement = len(matched)
                 res.sources = [Contribution(c.source, c.rev)

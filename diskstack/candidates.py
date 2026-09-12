@@ -374,7 +374,8 @@ def load(path: Path, fmt: gw_codec.DiskDef, *, pll: Optional[PLL] = None,
     from diskstack import formats, parallel  # circular at module scope
 
     image, kind = formats.open_image(path, fmt)
-    info = SourceInfo(path=path, kind=kind, size=path.stat().st_size)
+    info = SourceInfo(path=path, kind=kind,
+                      size=formats.input_size(path, kind))
     try:
         if kind not in formats.FLUX_KINDS:
             flat = info.size if kind in formats.FLAT_KINDS else None

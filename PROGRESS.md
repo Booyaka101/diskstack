@@ -28,7 +28,7 @@ Everything in the v1 brief is built and running:
 
 Run on this machine, not inferred:
 
-* `python -m pytest tests -q` - 73 passed in 26s. The suite builds real SCP
+* `python -m pytest tests -q` - 81 passed in 38s. The suite builds real SCP
   flux from a real PC floppy image and decodes it back.
 * Three damaged captures stacked into a file byte-identical to the source
   `Transylvania.img` (368640 bytes). Two captures leave exactly 6 unresolved
@@ -53,6 +53,15 @@ Run on this machine, not inferred:
 * The truncated-image fix, measured: a 4 KB `short.img` used to offer 720
   sectors, 716 of them zeroes marked CRC-clean, and a 0-byte file supplied 123
   sectors to a real merge. Now 8 and 0. An intact image is unchanged at 720.
+* Repeating `--pll` now reaches every flux container: an HFE went from 720
+  attempts to 1440 and a KryoFlux set from 207 to 414. Only `.scp` was
+  honouring the second setting before.
+* Two `.img` files differing in one sector used to merge silently and print
+  "Every sector confirmed by CRC" with no CRC anywhere in the inputs. That
+  merge now reports the sector contested, names it, and says nothing confirmed
+  the rest.
+* A KryoFlux input reports the size of the whole stream set, 1015925 bytes for
+  the 8-track fixture, not the 135269 of the one file named.
 * `pyflakes diskstack tests tools` is clean outside `_vendor`.
 * Clone check (difflib over function bodies): highest pair in the product code
   is 0.48 and is a closure counted against its own enclosing function. The

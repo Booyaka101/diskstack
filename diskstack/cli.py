@@ -75,7 +75,7 @@ def load_source(path: Path, fmt, plls: Sequence[Optional[PLL]],
     """
     cands, info = read_one(path, fmt, plls[0], revs, detect_filler, jobs,
                            on_track)
-    if info.kind != 'scp':
+    if info.kind not in formats.FLUX_KINDS:
         return cands, info
     for pll in plls[1:]:
         more, extra = read_one(path, fmt, pll, revs, detect_filler, jobs,
@@ -191,6 +191,9 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
                              f'the merge over a dump would destroy it.')
     if report_path is not None and report_path.resolve() in seen:
         raise DiskStackError(f'{report_path}: that is one of the inputs.')
+    if report_path is not None and report_path.resolve() == output.resolve():
+        raise DiskStackError(f'{report_path}: that is the merged image. The '
+                             f'report would be written over it.')
     formats.check_writable(output)
 
     plls = _parse_plls(pll_specs)

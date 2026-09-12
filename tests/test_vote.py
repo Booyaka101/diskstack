@@ -175,3 +175,30 @@ def test_a_plain_majority_still_wins_first():
              for i, (offset, bit) in enumerate([(0, 0), (100, 3), (511, 7)])]
 
     assert stack.resolve((3, 0, 5), 512, group).method == 'majority'
+
+
+def test_a_crc_confirmed_read_beats_a_sector_image_that_disagrees():
+    """A .img sector is only uncontradicted; a flux sector passed a CRC."""
+    good = bytes(range(256)) * 2
+    other = flip_bit(good, 4, 0)
+    group = [candidate(other, None, 'dump.img', ok=True),
+             candidate(good, crc_bytes(good), 'dump.scp', ok=True)]
+
+    res = stack.resolve((3, 0, 5), 512, group)
+
+    assert res.status == stack.CLEAN
+    assert res.data == good
+    assert res.verified and res.contested
+    assert [c.source.name for c in res.sources] == ['dump.scp']
+
+
+def test_two_sector_images_that_disagree_are_contested_but_not_verified():
+    good = bytes(range(256)) * 2
+    group = [candidate(good, None, 'a.img', ok=True),
+             candidate(flip_bit(good, 4, 0), None, 'b.img', ok=True)]
+
+    res = stack.resolve((3, 0, 5), 512, group)
+
+    assert res.status == stack.CLEAN
+    assert res.data == good, 'the better-ranked dump wins'
+    assert res.contested and not res.verified

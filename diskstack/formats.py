@@ -213,21 +213,22 @@ def detect_format(paths: Sequence[Path],
     ordered = sorted(paths, key=is_flux)
     tried = []
     for path in ordered:
-        suffix = path.suffix.lower()
+        kind = READERS.get(path.suffix.lower(), (None, None))[1]
         try:
-            if suffix in ('.img', '.ima', '.st', '.adf'):
+            if kind in FLAT_KINDS:
                 size = path.stat().st_size
-                geom = _bpb_geometry(path.read_bytes()) \
-                    if suffix != '.adf' else None
+                # An ADF is pure sector data, with no boot sector to read.
+                geom = (None if kind == 'adf'
+                        else _bpb_geometry(path.read_bytes()))
                 if geom is not None and (name := match_geometry(geom)):
                     return name, f'{path.name} boot sector ({geom})'
                 if size in SIZE_FORMATS:
                     return SIZE_FORMATS[size], f'{path.name} size ({size} bytes)'
                 tried.append(f'{path.name}: {size} bytes matches no format')
                 continue
-            if suffix == '.imd':
+            if kind == 'imd':
                 geom = _imd_geometry(path)
-            elif is_flux(path):
+            elif kind in FLUX_KINDS:
                 geom = _scan_flux_geometry(path, pll)
             else:
                 continue
@@ -252,6 +253,14 @@ def detect_format(paths: Sequence[Path],
 def is_flux(path: Path) -> bool:
     """True if this input has to be decoded rather than simply read."""
     return READERS.get(path.suffix.lower(), (None, None))[1] in FLUX_KINDS
+
+
+def input_size(path: Path, kind: str) -> int:
+    """Bytes an input occupies. A KryoFlux input names one file of a set."""
+    if kind != 'kryoflux':
+        return path.stat().st_size
+    base = Path(KryoFlux(str(path), None).basename)
+    return sum(f.stat().st_size for f in base.parent.glob(base.name + '*.raw'))
 
 
 def open_image(path: Path, fmt: gw_codec.DiskDef):
@@ -331,5 +340,5 @@ def write_image(path: Path, fmt: gw_codec.DiskDef,
 
 
 __all__ = ['Geometry', 'check_writable', 'detect_format', 'fill_track',
-           'get_format', 'ibm', 'is_flux', 'match_geometry', 'open_image',
-           'supported_formats', 'write_image']
+           'get_format', 'ibm', 'input_size', 'is_flux', 'match_geometry',
+           'open_image', 'supported_formats', 'write_image']

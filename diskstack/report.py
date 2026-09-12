@@ -172,6 +172,8 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
             'recovered_by_vote': counts[VOTED],
             'unresolved': counts[UNRESOLVED],
             'missing': counts[MISSING],
+            'verified': sum(1 for r in result.resolutions if r.verified),
+            'contested': sum(1 for r in result.resolutions if r.contested),
         },
         'sectors': [
             {
@@ -185,6 +187,8 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
                 'agreement': res.agreement,
                 'discarded': res.discarded,
                 'unstable': res.unstable,
+                'contested': res.contested,
+                'verified': res.verified,
                 'method': res.method or None,
                 'sources': [{'path': str(c.source), 'rev': c.rev}
                             for c in res.sources],
@@ -219,6 +223,25 @@ def warnings(sources: Sequence[SourceInfo], fmt_name: str) -> List[str]:
     return out
 
 
+def contested_note(result: StackResult) -> List[str]:
+    """Sectors where the dumps disagreed and every reading looked good.
+
+    Nothing arbitrates this: the merge keeps the best-ranked dump's copy. It is
+    what deliberate weak bits look like, and what two dumps of two different
+    disks look like.
+    """
+    bad = [r for r in result.resolutions if r.contested]
+    if not bad:
+        return []
+    where = ', '.join(f'c{r.cyl}:h{r.head}:s{r.sec_id}' for r in bad[:4])
+    if len(bad) > 4:
+        where += f', and {len(bad) - 4} more'
+    return [f'{len(bad)} sector{"s" if len(bad) != 1 else ""} came out good '
+            f'in more than one dump but with different bytes ({where}). '
+            f"diskstack kept the best-ranked dump's copy and flagged them "
+            f'contested in the report.']
+
+
 def render(result: StackResult, sources: Sequence[SourceInfo],
            fmt_name: str, fmt_detail: str,
            retry_name: str = 'retry.scp',
@@ -230,7 +253,9 @@ def render(result: StackResult, sources: Sequence[SourceInfo],
         rows = _track_rows(result)
         if rows:
             out += ['', 'Tracks needing attention', track_table(result)]
-    out += warnings(sources, fmt_name)
+    notes = warnings(sources, fmt_name) + contested_note(result)
+    if notes:
+        out += [''] + notes
     commands = reread_commands(result, retry_name)
     if commands:
         out += ['', 'Re-read just these tracks, then run diskstack again '
@@ -243,5 +268,12 @@ def render(result: StackResult, sources: Sequence[SourceInfo],
                        f'pass of the same capture, which is what weak bits '
                        f'look like. More reads may not settle them.')
     else:
-        out += ['', 'Every sector confirmed by CRC. Nothing left to re-read.']
+        unchecked = sum(1 for r in result.resolutions if not r.verified)
+        if unchecked:
+            out += ['', f'Nothing left to re-read, but {unchecked} of these '
+                        f'sectors came from inputs that carry no check value, '
+                        f'so nothing confirmed them.']
+        else:
+            out += ['', 'Every sector confirmed by CRC. Nothing left to '
+                        're-read.']
     return '\n'.join(out)
