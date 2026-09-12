@@ -256,15 +256,25 @@ def is_flux(path: Path) -> bool:
 
 
 def input_size(path: Path, kind: str) -> int:
-    """Bytes an input occupies. A KryoFlux input names one file of a set."""
+    """Bytes an input occupies. A KryoFlux input names one file of a set.
+
+    The set is enumerated the way the reader opens it, one name per track, so
+    a second capture sitting in the same directory is not counted in.
+    """
     if kind != 'kryoflux':
         return path.stat().st_size
-    base = Path(KryoFlux(str(path), None).basename)
-    return sum(f.stat().st_size for f in base.parent.glob(base.name + '*.raw'))
+    base = KryoFlux(str(path), None).basename
+    files = (Path(f'{base}{cyl:02d}.{head}.raw')
+             for cyl in range(PROBE_CYLS) for head in (0, 1))
+    return sum(f.stat().st_size for f in files if f.exists())
 
 
-def open_image(path: Path, fmt: gw_codec.DiskDef):
-    """Open one input file, returning ``(image, kind)``."""
+def check_readable(path: Path) -> str:
+    """Kind of input this is, rejecting one diskstack cannot open at all.
+
+    Called for every input before any of them is decoded, so a typo in the
+    last filename does not cost a capture's worth of decoding first.
+    """
     if not path.exists():
         raise DiskStackError(f'{path}: no such file')
     if path.is_dir():
@@ -274,7 +284,23 @@ def open_image(path: Path, fmt: gw_codec.DiskDef):
         raise DiskStackError(
             f'{path}: unrecognised extension. diskstack reads '
             + ', '.join(sorted(READERS)))
-    cls, kind = entry
+    if entry[1] == 'kryoflux':
+        # The name is how the reader finds the rest of the set, so it is part
+        # of the input rather than a detail of this one file.
+        try:
+            KryoFlux(str(path), None)
+        except gw_error.Fatal as exc:
+            raise DiskStackError(
+                f'{path}: a KryoFlux input is named for one track of a set, '
+                f'like track00.0.raw. Name any one of them and diskstack '
+                f'reads the rest of the set from the same directory.') from exc
+    return entry[1]
+
+
+def open_image(path: Path, fmt: gw_codec.DiskDef):
+    """Open one input file, returning ``(image, kind)``."""
+    kind = check_readable(path)
+    cls = READERS[path.suffix.lower()][0]
     try:
         return cls.from_file(str(path), fmt, {}), kind
     except gw_error.Fatal as exc:
@@ -339,6 +365,6 @@ def write_image(path: Path, fmt: gw_codec.DiskDef,
         raise DiskStackError(f'{path}: {exc.strerror or exc}') from exc
 
 
-__all__ = ['Geometry', 'check_writable', 'detect_format', 'fill_track',
-           'get_format', 'ibm', 'input_size', 'is_flux', 'match_geometry',
-           'open_image', 'supported_formats', 'write_image']
+__all__ = ['Geometry', 'check_readable', 'check_writable', 'detect_format',
+           'fill_track', 'get_format', 'ibm', 'input_size', 'is_flux',
+           'match_geometry', 'open_image', 'supported_formats', 'write_image']

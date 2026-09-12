@@ -10,14 +10,73 @@ from __future__ import annotations
 import datetime
 import json
 from collections import defaultdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List, Optional, Sequence
 
 from diskstack import __version__
 from diskstack.candidates import SourceInfo
 from diskstack.stack import CLEAN, MISSING, UNRESOLVED, VOTED, StackResult
 
 SCHEMA_VERSION = 1
+
+
+@dataclass
+class Progress:
+    """How a merge moved against the report from the run before it."""
+
+    recovered: int
+    lost: int
+    still_bad: int
+
+
+def read_previous(path: Path) -> Optional[dict]:
+    """The report already sitting at ``path``, if it is one diskstack wrote."""
+    try:
+        previous = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return None
+    return previous if isinstance(previous, dict) else None
+
+
+def compare(previous: dict, result: StackResult) -> Optional[Progress]:
+    """What this merge changed since ``previous``, or None if not comparable.
+
+    The two runs have to cover the same sectors. Otherwise the report is of
+    another disk and a count of what changed would mean nothing.
+    """
+    if previous.get('schema') != SCHEMA_VERSION:
+        return None
+    try:
+        was = {(s['cyl'], s['head'], s['sec_id']):
+               s['status'] in (CLEAN, VOTED)
+               for s in previous['sectors']}
+    except (KeyError, TypeError):
+        return None
+    now = {res.key: res.resolved for res in result.resolutions}
+    if set(was) != set(now):
+        return None
+    return Progress(
+        recovered=sum(1 for k, ok in now.items() if ok and not was[k]),
+        lost=sum(1 for k, ok in now.items() if not ok and was[k]),
+        still_bad=sum(1 for k, ok in now.items() if not ok and not was[k]))
+
+
+def progress_note(progress: Optional[Progress]) -> List[str]:
+    """The one line that says whether the last re-read was worth doing."""
+    if progress is None:
+        return []
+    if progress.recovered or progress.lost:
+        parts = [f'{progress.recovered} recovered']
+        if progress.lost:
+            parts.append(f'{progress.lost} lost')
+        return [f'Since the last report: {", ".join(parts)}.']
+    if progress.still_bad:
+        return [f'No change since the last report: the same '
+                f'{progress.still_bad} sectors are still bad. Another pass at '
+                f'the same settings may not do better; --pll is the other '
+                f'thing to vary.']
+    return []
 
 
 def _ranges(values: Sequence[int]) -> str:
@@ -139,7 +198,8 @@ def track_table(result: StackResult) -> str:
 
 def build(result: StackResult, sources: Sequence[SourceInfo],
           fmt_name: str, fmt_detail: str, output: Path,
-          retry_name: str = 'retry.scp') -> dict:
+          retry_name: str = 'retry.scp',
+          progress: Optional[Progress] = None) -> dict:
     """The machine-readable report: every sector, with its provenance."""
     counts = result.counts()
     return {
@@ -199,6 +259,7 @@ def build(result: StackResult, sources: Sequence[SourceInfo],
             'tracks': reread_trackspecs(result),
             'commands': reread_commands(result, retry_name),
         },
+        'since_last_report': asdict(progress) if progress else None,
     }
 
 
@@ -245,9 +306,11 @@ def contested_note(result: StackResult) -> List[str]:
 def render(result: StackResult, sources: Sequence[SourceInfo],
            fmt_name: str, fmt_detail: str,
            retry_name: str = 'retry.scp',
-           tables: bool = True) -> str:
+           tables: bool = True,
+           progress: Optional[Progress] = None) -> str:
     """The stdout view: summary, provenance, and what to re-read."""
-    out = [f'Format: {fmt_name} ({fmt_detail})', '', summary_line(result)]
+    out = ([f'Format: {fmt_name} ({fmt_detail})', '', summary_line(result)]
+           + progress_note(progress))
     if tables:
         out += ['', 'Sources', source_table(sources, result)]
         rows = _track_rows(result)

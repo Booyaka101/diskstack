@@ -31,12 +31,16 @@ $ gw read disk_c.scp --tracks=c=17-19:h=0
 $ diskstack disk_a.scp disk_b.scp disk_c.scp -o merged.img
 
 720 sectors: 714 clean (from 3 files), 6 recovered by vote
+Since the last report: 6 recovered.
 
 Every sector confirmed by CRC. Nothing left to re-read.
 ```
 
 That run produced a file byte-identical to the original disk image. Repeat
-until the unresolved count reaches zero or stops moving. The full session is in
+until the unresolved count reaches zero or stops moving. diskstack reads the
+report it is about to overwrite, so it tells you which of the two happened:
+either how many sectors the new capture recovered, or that nothing changed and
+another pass at the same settings is unlikely to. The full session is in
 [examples/console-session.txt](examples/console-session.txt) and the report it
 wrote is in [examples/diskstack-report.json](examples/diskstack-report.json).
 
@@ -129,7 +133,9 @@ dumps of two different disks look like.
 A sector the merge could not confirm is marked `unstable` if one capture read
 it two different ways across its own revolutions. That is what weak bits look
 like, and they are usually deliberate, so more passes over the disk will not
-settle them. The stdout note says so next to the re-read command.
+settle them. The stdout note says so next to the re-read command. Two `--pll`
+settings reading one revolution two ways is a different thing, a decode that
+went marginal rather than a disk that moved, and does not count.
 
 Sectors Greaseweazle filled with `-=[BAD SECTOR]=-` are treated as failed
 reads, not as data, so a `.img` from an earlier bad session still contributes
@@ -213,6 +219,10 @@ contributing read came from. Plus per-input totals and the re-read trackspecs.
 other status. `discarded` counts attempts thrown away because they decoded to
 the wrong length for the sector. `verified` and `contested` are the two above,
 and `totals` counts both across the disk.
+
+`since_last_report` holds the `recovered`, `lost` and `still_bad` counts
+against the report this run replaced, or null on the first run and whenever
+the old report covers a different set of sectors.
 
 ## What it does not do
 

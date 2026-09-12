@@ -28,7 +28,7 @@ Everything in the v1 brief is built and running:
 
 Run on this machine, not inferred:
 
-* `python -m pytest tests -q` - 81 passed in 38s. The suite builds real SCP
+* `python -m pytest tests -q` - 93 passed in 40s. The suite builds real SCP
   flux from a real PC floppy image and decodes it back.
 * Three damaged captures stacked into a file byte-identical to the source
   `Transylvania.img` (368640 bytes). Two captures leave exactly 6 unresolved
@@ -62,6 +62,18 @@ Run on this machine, not inferred:
   the rest.
 * A KryoFlux input reports the size of the whole stream set, 1015925 bytes for
   the 8-track fixture, not the 135269 of the one file named.
+* Two `--pll` settings decoding one revolution two ways used to be reported as
+  weak bits. Re-reading the same capture twice at two settings now leaves
+  `unstable` false, while two revolutions of one capture disagreeing still
+  sets it.
+* The four-run loop on the fixtures: two captures leave 6 unresolved, the same
+  two again print "No change since the last report", adding capture_c prints
+  "Since the last report: 6 recovered", and dropping it again reports 6 lost.
+* Two KryoFlux sets in one directory used to be measured as one 2031850-byte
+  input. Each now reports its own 1015925.
+* A KryoFlux name that does not fit the per-track pattern, and any input with
+  an extension diskstack cannot read, now fail before the first capture is
+  decoded rather than after.
 * `pyflakes diskstack tests tools` is clean outside `_vendor`.
 * Clone check (difflib over function bodies): highest pair in the product code
   is 0.48 and is a closure counted against its own enclosing function. The
@@ -83,7 +95,8 @@ validation story.
 
 * **A decoded-candidate cache.** Re-running with one more capture re-decodes
   the captures that have not changed. A `.diskstack-cache` keyed on file hash
-  plus PLL settings would make the loop feel instant.
+  plus PLL settings would make the loop feel instant. This is now the only
+  thing left on the list that the loop itself would notice.
 * **Applesauce `.a2r` input.** KryoFlux `.raw` and HxC `.hfe` are in; `.a2r`
   is the other flux container the vendored tree reads. Left out because the
   reader is read-only and A2R3 only, so a fixture would have to come from

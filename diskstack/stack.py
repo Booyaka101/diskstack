@@ -219,12 +219,19 @@ def unstable(group: Sequence[Candidate]) -> bool:
 
     Two revolutions of one capture disagreeing is the signature of weak bits,
     which are deliberate on protected disks and do not settle down however
-    many more times the disk is read.
+    many more times the disk is read.  Comparing revolution against revolution
+    rather than pooling the whole file keeps a repeated ``--pll`` out of it:
+    two settings that read the same revolution two ways say something about
+    the decode, not about the disk.
     """
-    per_source: Dict[Path, set] = defaultdict(set)
+    per_source: Dict[Path, Dict[int, set]] = defaultdict(dict)
     for cand in group:
-        per_source[cand.source].add(cand.data)
-    return any(len(seen) > 1 for seen in per_source.values())
+        per_source[cand.source].setdefault(cand.rev, set()).add(cand.data)
+    for by_rev in per_source.values():
+        revs = list(by_rev.values())
+        if len(revs) > 1 and set.union(*revs) != set.intersection(*revs):
+            return True
+    return False
 
 
 def resolve(key: Tuple[int, int, int], size: int,

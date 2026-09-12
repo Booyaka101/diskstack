@@ -2,7 +2,7 @@
   "schema": 1,
   "tool": "diskstack",
   "version": "1.0.0",
-  "generated": "2026-09-12T00:43:24+00:00",
+  "generated": "2026-09-12T01:13:57+00:00",
   "format": "ibm.360",
   "format_detail": "capture_a.scp (IBM 40 cyls, 2 heads, 9 sectors of 512 bytes)",
   "output": "merged.img",
@@ -28482,5 +28482,6 @@
     "commands": [
       "gw read retry.scp --tracks=c=17-19:h=0"
     ]
-  }
+  },
+  "since_last_report": null
 }

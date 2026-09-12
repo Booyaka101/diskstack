@@ -184,8 +184,7 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
             raise DiskStackError(f'{path}: listed twice. Each dump can only '
                                  f'count once towards the vote.')
         seen.add(resolved)
-        if not path.exists():
-            raise DiskStackError(f'{path}: no such file')
+        formats.check_readable(path)
     if output.resolve() in seen:
         raise DiskStackError(f'{output}: that is one of the inputs. Writing '
                              f'the merge over a dump would destroy it.')
@@ -236,17 +235,23 @@ def run(inputs, output, report_path, no_report, fmt_name, pll_specs, revs,
     formats.write_image(output, fmt, result.sector_data(),
                         result.bad_sectors())
 
+    progress = None
     if not no_report:
         target = report_path or output.parent / 'diskstack-report.json'
+        # Read before writing: the file about to be overwritten is the last
+        # run of this same command, which is what the loop wants compared.
+        previous = report.read_previous(target)
+        if previous is not None:
+            progress = report.compare(previous, result)
         data = report.build(result, sources, fmt_name, detail, output,
-                            retry_name)
+                            retry_name, progress)
         try:
             report.write(data, target)
         except OSError as exc:
             raise DiskStackError(f'{target}: {exc.strerror or exc}') from exc
 
     click.echo(report.render(result, sources, fmt_name, detail, retry_name,
-                             tables=not quiet))
+                             tables=not quiet, progress=progress))
     click.echo('')
     written = [f'{output} ({output.stat().st_size} bytes)']
     if not no_report:

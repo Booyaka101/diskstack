@@ -142,3 +142,15 @@ def test_a_kryoflux_input_is_measured_as_the_whole_set(tmp_path, decoded):
     assert len(files) == KF_CYLS * 2
     assert info.size == sum(f.stat().st_size for f in files)
     assert info.size > stream.stat().st_size
+
+
+def test_a_second_kryoflux_set_in_the_directory_is_not_counted_in(
+        tmp_path, decoded):
+    write_kryoflux(tmp_path / 'disk00.0.raw', decoded.paths[0])
+    write_kryoflux(tmp_path / 'disk_take2_00.0.raw', decoded.paths[0])
+
+    first = formats.input_size(tmp_path / 'disk00.0.raw', 'kryoflux')
+    second = formats.input_size(tmp_path / 'disk_take2_00.0.raw', 'kryoflux')
+
+    assert first == second
+    assert first * 2 == sum(f.stat().st_size for f in tmp_path.glob('*.raw'))

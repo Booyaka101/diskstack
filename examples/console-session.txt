@@ -32,6 +32,7 @@ Reading capture_c.scp
 Format: ibm.360 (capture_a.scp (IBM 40 cyls, 2 heads, 9 sectors of 512 bytes))
 
 720 sectors: 714 clean (from 3 files), 6 recovered by vote
+Since the last report: 6 recovered.
 
 Sources
   file           type  revs  attempts  good  supplied  sole

@@ -202,3 +202,16 @@ def test_two_sector_images_that_disagree_are_contested_but_not_verified():
     assert res.status == stack.CLEAN
     assert res.data == good, 'the better-ranked dump wins'
     assert res.contested and not res.verified
+
+
+def test_two_pll_settings_disagreeing_is_not_a_weak_bit():
+    """Weak bits are revolutions disagreeing, not decodes of one revolution."""
+    good = bytes(range(256)) * 2
+    check = crc_bytes(good)
+    other = flip_bit(good, 7, 1)
+    passes = [candidate(data, check, 'a.scp', rev=rev)
+              for rev in range(3) for data in (good, other)]
+
+    assert not stack.unstable(passes)
+    assert stack.unstable([candidate(data, check, 'a.scp', rev=rev)
+                           for rev, data in enumerate((good, other, good))])

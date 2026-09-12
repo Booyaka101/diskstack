@@ -45,3 +45,13 @@ First release.
 - Refuses a report path equal to the merged image.
 - Counts a KryoFlux input as the whole stream set rather than the single file
   named on the command line.
+- Compares each run against the report it replaces and says how many sectors
+  the new capture recovered, or that nothing moved, which is the loop's stop
+  condition. Also in the report as `since_last_report`.
+- Stops calling a sector unstable when a repeated `--pll` read one revolution
+  two ways. Weak bits are revolutions disagreeing with each other, not two
+  decodes of the same revolution.
+- Rejects an input it cannot open, including a KryoFlux name that does not fit
+  the per-track pattern, before decoding any of the others.
+- Measures a KryoFlux set by the track files the reader will open, so a second
+  capture sitting in the same directory is not counted in.

@@ -239,3 +239,57 @@ def test_two_images_that_disagree_are_flagged_contested(tmp_path: Path):
     sector = next(s for s in report['sectors'] if s['contested'])
     assert (sector['cyl'], sector['head'], sector['sec_id']) == (1, 0, 2)
     assert out.read_bytes() == a.read_bytes(), 'the best-ranked dump wins'
+
+
+def test_a_bad_kryoflux_name_is_caught_before_any_input_is_read(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = tmp_path / 'dump.raw'
+    b.write_bytes(b'not a stream file')
+    result = run(a, b, '-o', tmp_path / 'out.img', '-f', 'ibm.360')
+    assert result.exit_code != 0
+    assert 'named for one track of a set' in result.output
+    assert 'Reading' not in result.output
+
+
+def test_an_unreadable_input_is_caught_before_any_input_is_read(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', set())
+    b = tmp_path / 'b.xyz'
+    b.write_bytes(b'nonsense')
+    result = run(a, b, '-o', tmp_path / 'out.img', '-f', 'ibm.360')
+    assert 'unrecognised extension' in result.output
+    assert 'Reading' not in result.output, 'rejected only after the work'
+
+
+def test_a_second_run_says_what_the_new_dump_recovered(tmp_path: Path):
+    """The loop's stop condition: did the last re-read actually help?"""
+    a = write_img(tmp_path / 'a.img', {19})
+    b = write_img(tmp_path / 'b.img', {19})
+    c = write_img(tmp_path / 'c.img', {3})
+    out = tmp_path / 'merged.img'
+
+    first = run(a, b, '-o', out)
+    assert first.exit_code == 2, first.output
+    assert 'Since the last report' not in first.output
+    assert json.loads((tmp_path / 'diskstack-report.json').read_text()
+                      )['since_last_report'] is None
+
+    again = run(a, b, '-o', out)
+    assert 'No change since the last report: the same 1 sectors' in again.output
+
+    better = run(a, b, c, '-o', out)
+    assert better.exit_code == 0, better.output
+    assert 'Since the last report: 1 recovered.' in better.output
+    assert json.loads((tmp_path / 'diskstack-report.json').read_text()
+                      )['since_last_report'] == {'recovered': 1, 'lost': 0,
+                                                 'still_bad': 0}
+
+
+def test_no_report_leaves_the_previous_one_alone(tmp_path: Path):
+    a = write_img(tmp_path / 'a.img', {19})
+    b = write_img(tmp_path / 'b.img', {19})
+    run(a, b, '-o', tmp_path / 'merged.img')
+    before = (tmp_path / 'diskstack-report.json').read_bytes()
+
+    result = run(a, b, '-o', tmp_path / 'merged.img', '--no-report')
+    assert 'Since the last report' not in result.output
+    assert (tmp_path / 'diskstack-report.json').read_bytes() == before

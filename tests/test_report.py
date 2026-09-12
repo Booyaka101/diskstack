@@ -164,3 +164,75 @@ def test_only_a_sector_image_reports_an_expected_size():
 
     assert [i['bytes'] for i in built['inputs']] == [19327821, 368640]
     assert [i['expected_bytes'] for i in built['inputs']] == [None, 368640]
+
+
+def previous_report(result: stack.StackResult, tmp_path: Path) -> Path:
+    path = tmp_path / 'diskstack-report.json'
+    report.write(report.build(result, sources(), 'ibm.360', 'test',
+                              tmp_path / 'out.img'), path)
+    return path
+
+
+def progress_for(before: stack.StackResult, after: stack.StackResult,
+                 tmp_path: Path):
+    return report.compare(report.read_previous(previous_report(before,
+                                                               tmp_path)),
+                          after)
+
+
+def test_a_re_read_that_helped_says_how_much(tmp_path: Path):
+    progress = progress_for(make_result({(0, 1): [2, 3]}),
+                            make_result({(0, 1): [3]}), tmp_path)
+
+    assert (progress.recovered, progress.lost, progress.still_bad) == (1, 0, 1)
+    text = report.render(make_result({(0, 1): [3]}), sources(), 'ibm.360',
+                         'test', progress=progress)
+    assert 'Since the last report: 1 recovered.' in text
+
+
+def test_a_re_read_that_changed_nothing_says_to_stop(tmp_path: Path):
+    """The loop needs a stop condition, and this is it."""
+    same = make_result({(0, 1): [2]})
+    progress = progress_for(same, same, tmp_path)
+
+    assert (progress.recovered, progress.lost) == (0, 0)
+    text = report.render(same, sources(), 'ibm.360', 'test',
+                         progress=progress)
+    assert 'No change since the last report: the same 1 sectors' in text
+    assert '--pll is the other thing to vary' in text
+
+
+def test_dropping_an_input_shows_up_as_sectors_lost(tmp_path: Path):
+    progress = progress_for(make_result({}), make_result({(1, 0): [4]}),
+                            tmp_path)
+
+    assert (progress.recovered, progress.lost) == (0, 1)
+    text = report.render(make_result({(1, 0): [4]}), sources(), 'ibm.360',
+                         'test', progress=progress)
+    assert 'Since the last report: 0 recovered, 1 lost.' in text
+
+
+def test_a_clean_run_with_nothing_before_it_says_nothing(tmp_path: Path):
+    assert report.read_previous(tmp_path / 'nope.json') is None
+    assert report.progress_note(None) == []
+    progress = progress_for(make_result({}), make_result({}), tmp_path)
+    assert report.progress_note(progress) == []
+
+
+def test_a_report_of_another_disk_is_not_compared(tmp_path: Path):
+    """Comparing counts across two different disks would be meaningless."""
+    other = stack.StackResult(resolutions=make_result({}).resolutions[:8],
+                              ranking=[Path('a.scp')])
+    assert progress_for(other, make_result({}), tmp_path) is None
+
+    path = previous_report(make_result({}), tmp_path)
+    bumped = json.loads(path.read_text())
+    bumped['schema'] = report.SCHEMA_VERSION + 1
+    report.write(bumped, path)
+    assert report.compare(bumped, make_result({})) is None
+
+
+def test_junk_where_the_report_should_be_is_ignored(tmp_path: Path):
+    path = tmp_path / 'diskstack-report.json'
+    path.write_text('not json at all')
+    assert report.read_previous(path) is None
