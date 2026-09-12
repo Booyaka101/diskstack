@@ -39,6 +39,10 @@ Local changes, all applied automatically by tools/vendor.py:
     of discarding both. An IMD full of error sectors is exactly the input
     diskstack exists to merge.
 
+  * tools/util.py: TrackSet.TrackIter gets an __iter__ returning itself. An
+    iterator has to be iterable, and Python 3.13 enforces it, so without this
+    every `for track in diskdef.tracks` raises TypeError there.
+
   * codec/codec.py: importlib.resources.open_text is replaced with
     importlib.resources.files(...).joinpath(...).open(), which is the form
     that still works once the package is installed as a wheel.

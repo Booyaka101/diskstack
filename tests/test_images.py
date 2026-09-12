@@ -155,3 +155,15 @@ def test_a_second_kryoflux_set_in_the_directory_is_not_counted_in(
 
     assert first == second
     assert first * 2 == sum(f.stat().st_size for f in tmp_path.glob('*.raw'))
+
+
+def test_the_vendored_track_iterator_is_iterable():
+    """Python 3.13 rejects an iterator that has no __iter__ of its own.
+
+    Every track walk in diskstack goes through this one, and the patch that
+    adds it lives in tools/vendor.py.
+    """
+    tracks = iter(formats.get_format(FORMAT).tracks)
+
+    assert iter(tracks) is tracks
+    assert len(candidates.track_list(formats.get_format(FORMAT))) == 80

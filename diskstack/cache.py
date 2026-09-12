@@ -133,7 +133,12 @@ def _put(directory: Path, filename: str, blob: bytes) -> bool:
         tmp.write_bytes(blob)
         os.replace(tmp, directory / filename)
     except OSError:
-        tmp.unlink(missing_ok=True)
+        # Cleaning up can fail for the same reason the write did: on Linux a
+        # cache directory that is really a file makes unlink raise ENOTDIR.
+        try:
+            tmp.unlink(missing_ok=True)
+        except OSError:
+            pass
         return False
     return True
 

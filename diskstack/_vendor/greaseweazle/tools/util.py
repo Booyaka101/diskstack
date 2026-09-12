@@ -42,6 +42,8 @@ class TrackSet:
                     l.append((pc, ph, c, h))
             l.sort()
             self.l = iter(l)
+        def __iter__(self):
+            return self
         def __next__(self):
             (self.physical_cyl, self.physical_head,
              self.cyl, self.head) = next(self.l)

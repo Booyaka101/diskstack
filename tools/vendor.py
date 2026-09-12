@@ -125,6 +125,15 @@ PATCHES = [
         '                    s.crc = s.dam.crc = 0xffff\n',
     ),
     (
+        # An iterator has to be iterable. Python 3.13 enforces it, and without
+        # this every `for track in diskdef.tracks` raises TypeError there.
+        'tools/util.py',
+        '        def __next__(self):\n',
+        '        def __iter__(self):\n'
+        '            return self\n'
+        '        def __next__(self):\n',
+    ),
+    (
         'codec/codec.py',
         "            with importlib.resources.open_text("
         "'diskstack._vendor.greaseweazle.data',\n"
