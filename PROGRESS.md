@@ -53,6 +53,11 @@ Run on this machine, not inferred:
   checksum over it, so the damage patterns are reproducible.
 * Three damaged captures merge back to `Transylvania.img` byte for byte, run
   from the installed console script rather than the source tree.
+* The same merge again from `pip install diskstack` out of PyPI, in a fresh
+  venv with no cache: 714 clean, 6 recovered by vote, exit 0, and the output
+  byte-identical to `Transylvania.img`. The published wheel and sdist have the
+  same sha256 as the ones the release workflow built and attached to the
+  GitHub release.
 * CI on GitHub found two bugs that 113 green tests on this machine could not.
   Python 3.13 refuses an iterator with no `__iter__` of its own, which is every
   Greaseweazle `TrackIter`, so the tool did not run at all on the newest
@@ -103,15 +108,16 @@ Run on this machine, not inferred:
 
 ## Next step
 
-PyPI. The repo is at https://github.com/Booyaka101/diskstack and v1.0.0 is
-released there with both artifacts attached. The release workflow uploads to
-PyPI on a tag as soon as a `PYPI_API_TOKEN` secret exists, and skips cleanly
-without one, so this is: make the token, `gh secret set PYPI_API_TOKEN`, and
-re-run the Release workflow. The name `diskstack` was free when this was
-written. The README says so until it lands. After that, the one distribution
-step worth doing is a post in the Greaseweazle discussion forum or
-`r/datarecovery` describing the re-read loop, because the people who already
-own a flux reader are the only people who can have two dumps of one disk.
+Distribution. `pip install diskstack` works, so the one step left is a post in
+the Greaseweazle discussion forum or `r/datarecovery` describing the re-read
+loop, because the people who already own a flux reader are the only people who
+can have two dumps of one disk.
+
+Before the next release, put a project-scoped PyPI token in the repo as
+`PYPI_API_TOKEN` and let the release workflow do the upload. 1.0.0 went up by
+hand from this machine because the only token here is account-scoped, and an
+account-scoped token does not belong in a repository secret. A project token
+can only exist once the project does, which is now.
 
 Ask for `diskstack-report.json` from a real deteriorated disk. The damage in
 the test fixtures is synthetic and that is the one honest weakness in the

@@ -55,9 +55,6 @@ pip install diskstack
 
 Python 3.11 or newer. No hardware, no network, no configuration.
 
-Until the PyPI upload lands, `pip install
-git+https://github.com/Booyaka101/diskstack` gets you the same thing.
-
 ## Use
 
 ```
