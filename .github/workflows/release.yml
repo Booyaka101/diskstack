@@ -1,11 +1,8 @@
 name: Release
 
 # Builds diskstack for a v* tag, attaches the artifacts to the GitHub release,
-# and publishes to PyPI when a token is configured.
-#
-# Without PYPI_API_TOKEN the tests, the build and twine check still run as
-# release validation and the upload skips cleanly, so a tag push never red-Xs
-# just because the account is not wired up yet.
+# and publishes them to PyPI through trusted publishing. PyPI trusts this
+# workflow file in the "pypi" environment, so there is no token to store.
 on:
   push:
     tags: ['v*']
@@ -14,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -44,15 +41,22 @@ jobs:
           fi
           gh release upload "$GITHUB_REF_NAME" dist/* --clobber
 
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          if [ -z "${TWINE_PASSWORD:-}" ]; then
-            echo "No PYPI_API_TOKEN configured. The artifacts are on the" \
-                 "release; upload them with twine when you are ready." \
-                 >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          python -m twine upload --skip-existing dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
