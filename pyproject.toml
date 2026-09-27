@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "diskstack"
-version = "1.0.0"
+version = "1.0.1"
 description = "Merge several dumps of one floppy disk into the best possible image, and say what is still missing"
 readme = "README.md"
 requires-python = ">=3.11"
