@@ -244,7 +244,7 @@ the old report covers a different set of sectors. Each input carries `cached`,
 saying whether its sectors were decoded on this run or reused from an earlier
 one.
 
-`reread` is the command stdout ends with, in a form another tool can use.
+`reread` is what stdout ends with, in a form another tool can use.
 `tracks` holds Greaseweazle `--tracks=` specs covering every sector still
 unresolved or missing, and `commands` the full `gw read` lines built from them:
 
@@ -256,8 +256,8 @@ unresolved or missing, and `commands` the full `gw read` lines built from them:
 ```
 
 Heads whose bad cylinders match share one spec. Otherwise each head gets its
-own, and the commands number their files (`retry1.scp`, `retry2.scp`, or
-whatever `--retry-name` says) so one pass does not overwrite the other. Both
+own, and the commands number their files off `--retry-name` (`retry1.scp`,
+`retry2.scp`) so one pass does not overwrite the other. Both
 lists are empty once nothing is left to re-read. Contested sectors are never in
 them, because they already read clean and another pass cannot pick a side.
 

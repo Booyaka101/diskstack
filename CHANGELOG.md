@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.1 - 2026-09-27
+
+Documentation and tests only. Nothing in the package changed behaviour.
+
+- The README documents the `reread` block of `diskstack-report.json`: the
+  `--tracks=` specs and the full `gw read` lines, how several heads get
+  numbered capture names, and that contested sectors are never in it.
+- The README no longer says to install from GitHub until the PyPI upload
+  lands. 1.0.0 is on PyPI, and this release puts the current README there.
+- A test covers the loop the README leads with: a three-track SCP holding
+  only the bad tracks stacks with two full captures and finishes the disk
+  byte for byte.
+
 ## 1.0.0 - 2026-09-12
 
 First release.
