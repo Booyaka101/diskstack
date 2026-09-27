@@ -244,6 +244,23 @@ the old report covers a different set of sectors. Each input carries `cached`,
 saying whether its sectors were decoded on this run or reused from an earlier
 one.
 
+`reread` is the command stdout ends with, in a form another tool can use.
+`tracks` holds Greaseweazle `--tracks=` specs covering every sector still
+unresolved or missing, and `commands` the full `gw read` lines built from them:
+
+```json
+"reread": {
+  "tracks": ["c=17-19:h=0"],
+  "commands": ["gw read retry.scp --tracks=c=17-19:h=0"]
+}
+```
+
+Heads whose bad cylinders match share one spec. Otherwise each head gets its
+own, and the commands number their files (`retry1.scp`, `retry2.scp`, or
+whatever `--retry-name` says) so one pass does not overwrite the other. Both
+lists are empty once nothing is left to re-read. Contested sectors are never in
+them, because they already read clean and another pass cannot pick a side.
+
 ## What it does not do
 
 v1 is deliberately narrow. No GCR, so no Apple II and no Commodore. No writing
